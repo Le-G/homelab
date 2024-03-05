@@ -49,3 +49,6 @@ grafana:
           group_by:
             - grafana_folder
             - alertname
+  admin:
+    existingSecret: grafana-admin-secret
+    passwordKey: password

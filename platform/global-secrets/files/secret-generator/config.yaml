@@ -51,3 +51,10 @@
     - key: password
       length: 32
       special: true
+
+# grafana
+- name: grafana.admin
+  data:
+    - key: password
+      length: 32
+      special: true
