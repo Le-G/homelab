@@ -52,4 +52,3 @@ grafana:
   admin:
     existingSecret: grafana-admin-secret
     passwordKey: password
-    userKey: ""
