@@ -44,3 +44,10 @@
     - key: password
       length: 32
       special: true
+
+# nextcloud postgres
+- name: nextcloud.pgadminpassword
+  data:
+    - key: password
+      length: 32
+      special: true

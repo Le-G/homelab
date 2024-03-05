@@ -5,13 +5,33 @@ app-template:
         main:
           image:
             repository: docker.io/nextcloud
-            tag: 28-fpm-alpine
+            tag: 28.0-apache
+    db:
+      containers:
+        postgres:
+          image:
+            repository: docker.io/postgres
+            tag: 16.2-alpine
+          env:
+          - name: PGDATA
+            value: &pgdata /var/lib/postgresql/data
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud-db-password
+                key: password
   service:
     main:
       ports:
         http:
           port: 80
           protocol: HTTP
+    db:
+      controller: db
+      ports:
+        tcp:
+          port: 5432
+          protocol: TCP
   ingress:
     main:
       enabled: true
@@ -19,7 +39,7 @@ app-template:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-        - host: &host cloud.le-g.dev
+        - host: &host nextcloud.le-g.dev
           paths:
             - path: /
               pathType: Prefix
@@ -33,6 +53,13 @@ app-template:
   persistence:
     data:
       accessMode: ReadWriteOnce
-      size: 1Gi
-      globalMounts:
-        - path: /data
+      size: 50Gi
+      advancedMounts:
+        main:
+          main:
+            - path: /var/www/html
+              subPath: nextcloud/
+        db:
+          db:
+            - path: *pgdata
+              subPath: postgres/
