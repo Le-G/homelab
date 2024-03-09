@@ -31,16 +31,24 @@ app-template:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-        - host: &host password.le-g.dev
+        - host: &api-host api.password.le-g.dev
           paths:
             - path: /
               pathType: Prefix
               service:
                 name: web
                 port: http
+        - host: &web-host password.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: http
       tls:
         - hosts:
-            - *host
+            - *api-host
+            - *web-host
           secretName: vaultwarden-tls-certificate
   persistence:
     data:
