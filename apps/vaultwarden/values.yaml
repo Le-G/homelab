@@ -6,20 +6,8 @@ app-template:
           image:
             repository: docker.io/vaultwarden/server
             tag: 1.30.5-alpine
-    web:
-      containers:
-        web:
-          image:
-            repository: docker.io/vaultwarden/web-vault
-            tag: v2024.1.2
   service:
     main:
-      ports:
-        http:
-          port: 80
-          protocol: HTTP
-    web:
-      controller: web
       ports:
         http:
           port: 80
@@ -31,14 +19,7 @@ app-template:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-        - host: &api-host api.password.le-g.dev
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: web
-                port: http
-        - host: &web-host password.le-g.dev
+        - host: &host password.le-g.dev
           paths:
             - path: /
               pathType: Prefix
@@ -47,15 +28,14 @@ app-template:
                 port: http
       tls:
         - hosts:
-            - *api-host
-            - *web-host
+            - *host
           secretName: vaultwarden-tls-certificate
   persistence:
     data:
       accessMode: ReadWriteOnce
       size: 1Gi
       advancedMounts:
-        web:
-          web:
+        main:
+          main:
             - path: /data
               subPath: data/
