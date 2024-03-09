@@ -4,6 +4,7 @@
     - prerequisites
     - k3s
     - automatic_upgrade
+    - nfs_client
 
 - name: Install Kubernetes addons
   hosts: localhost

@@ -1,0 +1,4 @@
+- name: Install package
+  ansible.builtin.dnf:
+    name:
+      - nfs-utils
