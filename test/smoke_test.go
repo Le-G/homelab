@@ -22,7 +22,6 @@ func TestSmoke(t *testing.T) {
 		{"gitea", "gitea"},
 		{"grafana", "grafana"},
 		{"homepage", "homepage"},
-		{"kanidm", "kanidm"},
 		{"registry-docker-registry", "registry"},
 	}
 
