@@ -40,8 +40,6 @@ app-template:
     data:
       accessMode: ReadWriteOnce
       size: 1Gi
-      advancedMounts:
-        main:
-          main:
-            - path: /data
-              subPath: data/
+      globalMounts:
+        - path: /data
+          readOnly: false
