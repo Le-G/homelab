@@ -60,10 +60,6 @@ app-template:
               target: _blank
         services.yaml: |
           - Popular:
-            - Matrix:
-                href: https://chat.le-g.dev
-                description: Chat client
-                icon: element.svg
             - Jellyfin:
                 href: https://jellyfin.le-g.dev
                 description: Media system (movies, music, etc.)
