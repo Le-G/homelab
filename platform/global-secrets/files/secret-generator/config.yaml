@@ -32,3 +32,10 @@
     - key: password
       length: 32
       special: true
+
+# vaultwarden
+- name: vaultwarden.admin
+  data:
+    - key: password
+      length: 40
+      special: true
