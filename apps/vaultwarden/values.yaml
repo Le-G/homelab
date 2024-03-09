@@ -7,7 +7,7 @@ app-template:
             repository: docker.io/vaultwarden/server
             tag: 1.30.5-alpine
           env:
-            - name: ADMIN_TOKEN
+          - name: ADMIN_TOKEN
             valueFrom:
               secretKeyRef:
                 name: vaultwarden-admin-token
