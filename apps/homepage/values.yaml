@@ -94,10 +94,6 @@ app-template:
                 href: https://git.le-g.dev
                 description: Git forge
                 icon: gitea.svg
-            - Woodpecker:
-                href: https://ci.le-g.dev
-                description: Continuous integration
-                icon: woodpecker-ci.svg
             - ArgoCD:
                 href: https://argocd.le-g.dev
                 description: Continuous deployment
