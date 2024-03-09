@@ -89,10 +89,6 @@ app-template:
                 href: https://sonarr.le-g.dev
                 description: TV show manager
                 icon: sonarr.svg
-            - Kanidm:
-                href: https://auth.le-g.dev
-                description: Identity management
-                icon: https://auth.le-g.dev/pkg/img/logo-square.svg
           - Development:
             - Gitea:
                 href: https://git.le-g.dev
