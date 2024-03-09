@@ -98,10 +98,6 @@ app-template:
                 href: https://argocd.le-g.dev
                 description: Continuous deployment
                 icon: argocd.svg
-            - Registry:
-                href: https://registry.le-g.dev
-                description: Container registry
-                icon: docker.svg
             - Grafana:
                 href: https://grafana.le-g.dev
                 description: Observability dashboards

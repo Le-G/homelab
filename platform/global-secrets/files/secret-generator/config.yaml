@@ -5,13 +5,6 @@
       length: 32
       special: true
 
-# Registry
-- name: registry.admin
-  data:
-    - key: password
-      length: 32
-      special: true
-
 # Paperless
 - name: paperless.admin
   data:

@@ -22,7 +22,6 @@ func TestSmoke(t *testing.T) {
 		{"gitea", "gitea"},
 		{"grafana", "grafana"},
 		{"homepage", "homepage"},
-		{"registry-docker-registry", "registry"},
 	}
 
 	for _, app := range mainApps {
