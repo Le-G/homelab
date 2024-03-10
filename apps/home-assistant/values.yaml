@@ -40,6 +40,13 @@ app-template:
       globalMounts:
         - path: /config
           readOnly: false
+    config:
+      enabled: true
+      type: configMap
+      name: homeassistant-config
+      globalMounts:
+        - path: /config
+          subPath: configuration.yaml
   configMaps:
     config:
       enabled: true
