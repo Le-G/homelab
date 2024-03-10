@@ -34,12 +34,6 @@ app-template:
             - *host
           secretName: homeassistant-tls-certificate
   persistence:
-    data:
-      accessMode: ReadWriteOnce
-      size: 1Gi
-      globalMounts:
-        - path: /config
-          readOnly: false
     config:
       enabled: true
       type: configMap
