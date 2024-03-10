@@ -39,7 +39,7 @@ app-template:
       type: configMap
       name: home-assistant-config
       globalMounts:
-        - path: /config/configuration.yaml
+        - path: /config.tmp/configuration.yaml
           subPath: configuration.yaml
   configMaps:
     config:
@@ -61,4 +61,10 @@ app-template:
             trusted_proxies:
               - 192.168.1.110
               - 192.168.1.111
+        automations.yaml: |
+          # Empty
+        scripts.yaml: |
+          # Empty
+        scenes.yaml: |
+          # Empty
 
