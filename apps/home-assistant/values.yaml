@@ -45,7 +45,7 @@ app-template:
       type: configMap
       name: homeassistant-config
       globalMounts:
-        - path: /config
+        - path: /config/configuration.yaml
           subPath: configuration.yaml
   configMaps:
     config:
