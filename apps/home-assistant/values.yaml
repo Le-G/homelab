@@ -19,6 +19,15 @@ app-template:
       ports:
         http:
           port: 8123
+    mosquitto:
+      ports:
+        moquitto-mqtt:
+          port: 1883
+          protocol: TCP
+        moquitto-ws:
+          port: 9001
+          protocol: TCP
+        
   ingress:
     main:
       enabled: true
@@ -33,9 +42,17 @@ app-template:
               service:
                 name: main
                 port: http
+        - host: &mosquitto-host mosquitto.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: mosquitto-mqtt
       tls:
         - hosts:
             - *host
+            - *mosquitto-host
           secretName: homeassistant-tls-certificate
   persistence:
     data:
