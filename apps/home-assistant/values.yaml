@@ -41,6 +41,12 @@ app-template:
       globalMounts:
         - path: /config/configuration.yaml
           subPath: configuration.yaml
+        - path: /config/automations.yaml
+          subPath: automations.yaml
+        - path: /config/scripts.yaml
+          subPath: scripts.yaml
+        - path: /config/scenes.yaml
+          subPath: scenes.yaml
   configMaps:
     config:
       enabled: true
