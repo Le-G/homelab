@@ -10,10 +10,11 @@ app-template:
             tag: 2024.3
   service:
     main:
+      controller: main
+      type: ClusterIP
       ports:
         http:
           port: 8123
-          protocol: HTTP
   ingress:
     main:
       enabled: true
