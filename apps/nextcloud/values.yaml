@@ -6,18 +6,18 @@ app-template:
           image:
             repository: docker.io/nextcloud
             tag: 28.0-apache
-      env:
-      - name: POSTGRES_HOST
-        value: db
-      - name: POSTGRES_DB
-        value: &db nextcloud
-      - name: POSTGRES_USER
-        value: &pguser nextcloud
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: nextcloud-db-password
-            key: password
+          env:
+          - name: POSTGRES_HOST
+            value: db
+          - name: POSTGRES_DB
+            value: &db nextcloud
+          - name: POSTGRES_USER
+            value: &pguser nextcloud
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud-db-password
+                key: password
     db:
       containers:
         postgres:
