@@ -8,7 +8,7 @@ app-template:
             tag: 28.0-apache
           env:
           - name: POSTGRES_HOST
-            value: db
+            value: nextcloud-db
           - name: POSTGRES_DB
             value: &db nextcloud
           - name: POSTGRES_USER
