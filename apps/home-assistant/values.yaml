@@ -20,6 +20,7 @@ app-template:
         http:
           port: 8123
     mosquitto:
+      controller: main
       ports:
         moquitto-mqtt:
           port: 1883
