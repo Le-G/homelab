@@ -37,17 +37,9 @@ app-template:
               service:
                 name: main
                 port: http
-        - host: &mosquitto-host mosquitto.le-g.dev
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: main
-                port: mosquitto-mqtt
       tls:
         - hosts:
             - *host
-            - *mosquitto-host
           secretName: homeassistant-tls-certificate
   persistence:
     data:
