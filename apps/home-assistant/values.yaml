@@ -81,6 +81,7 @@ app-template:
             trusted_proxies:
               - 192.168.1.110
               - 192.168.1.111
+              - 10.0.1.225
         automations.yaml: |
           []
         scripts.yaml: |
