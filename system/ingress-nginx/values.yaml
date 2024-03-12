@@ -8,4 +8,4 @@ ingress-nginx:
         enabled: true
   tcp:
     22: gitea/gitea-ssh:22
-    8123: home-assistant/home-assistant:8123
+    1883: home-assistant/home-assistant:1883
