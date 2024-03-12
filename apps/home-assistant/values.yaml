@@ -19,16 +19,10 @@ app-template:
       ports:
         http:
           port: 8123
-    mosquitto:
-      controller: main
-      ports:
-        moquitto-mqtt:
+        mosquitto-mqtt:
           port: 1883
-          protocol: TCP
         moquitto-ws:
           port: 9001
-          protocol: TCP
-        
   ingress:
     main:
       enabled: true
