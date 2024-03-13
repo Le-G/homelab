@@ -61,7 +61,7 @@ app-template:
           subPath: scripts.yaml
         - path: /config/scenes.yaml
           subPath: scenes.yaml
-        - path: /mosquito/config/mosquitto.conf
+        - path: /mosquitto/config/mosquitto.conf
           subPath: mosquitto.conf
   configMaps:
     config:
