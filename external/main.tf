@@ -14,3 +14,8 @@ module "github" {
   source = "./modules/github"
   auth   = var.github.auth
 }
+
+module "extra_secrets" {
+  source = "./modules/extra-secrets"
+  data   = var.extra_secrets
+}
