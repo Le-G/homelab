@@ -12,6 +12,10 @@ app-template:
           image:
             repository: docker.io/eclipse-mosquitto
             tag: 2.0
+      initContainers:
+      - name: init-config
+        image: busybox
+        command: ['sh', '-c', 'cp /init-config/* /config']
   service:
     main:
       controller: main
@@ -53,13 +57,13 @@ app-template:
       type: configMap
       name: home-assistant-config
       globalMounts:
-        - path: /config/configuration.yaml
+        - path: /init-config/configuration.yaml
           subPath: configuration.yaml
-        - path: /config/automations.yaml
+        - path: /init-config/automations.yaml
           subPath: automations.yaml
-        - path: /config/scripts.yaml
+        - path: /init-config/scripts.yaml
           subPath: scripts.yaml
-        - path: /config/scenes.yaml
+        - path: /init-config/scenes.yaml
           subPath: scenes.yaml
         - path: /mosquitto/config/mosquitto.conf
           subPath: mosquitto.conf
