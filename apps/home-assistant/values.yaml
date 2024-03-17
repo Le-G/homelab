@@ -55,12 +55,12 @@ app-template:
       globalMounts:
         - path: /config/configuration.yaml
           subPath: configuration.yaml
-        # - path: /config/automations.yaml
-        #   subPath: automations.yaml
-        # - path: /config/scripts.yaml
-        #   subPath: scripts.yaml
-        # - path: /config/scenes.yaml
-        #   subPath: scenes.yaml
+        - path: /config/automations.yaml
+          subPath: automations.yaml
+        - path: /config/scripts.yaml
+          subPath: scripts.yaml
+        - path: /config/scenes.yaml
+          subPath: scenes.yaml
         - path: /mosquitto/config/mosquitto.conf
           subPath: mosquitto.conf
   configMaps:
@@ -84,12 +84,12 @@ app-template:
               - 192.168.1.110
               - 192.168.1.111
               - 10.0.0.0/16
-        # automations.yaml: |
-        #   []
-        # scripts.yaml: |
-        #   # Empty
-        # scenes.yaml: |
-        #   # Empty
+        automations.yaml: |
+          []
+        scripts.yaml: |
+          # Empty
+        scenes.yaml: |
+          # Empty
         mosquitto.conf: |
           listener 1883 0.0.0.0
           allow_anonymous true
