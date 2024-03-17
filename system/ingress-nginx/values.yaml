@@ -7,5 +7,4 @@ ingress-nginx:
       serviceMonitor:
         enabled: true
   tcp:
-    22: gitea/gitea-ssh:22
     1883: home-assistant/home-assistant:1883

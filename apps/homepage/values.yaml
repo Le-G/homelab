@@ -90,10 +90,6 @@ app-template:
                 description: TV show manager
                 icon: sonarr.svg
           - Development:
-            - Gitea:
-                href: https://git.le-g.dev
-                description: Git forge
-                icon: gitea.svg
             - ArgoCD:
                 href: https://argocd.le-g.dev
                 description: Continuous deployment

@@ -4,9 +4,8 @@ renovate:
   renovate:
     config: |
       {
-        "platform": "gitea",
-        "endpoint": "https://git.le-g.dev/api/v1",
         "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-        "autodiscover": true
+        "repositories": [{ 'le-g/homelab'];
+        "autodiscover": false,
       }
   existingSecret: renovate-secret
