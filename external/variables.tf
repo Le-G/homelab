@@ -24,3 +24,11 @@ variable "ntfy" {
 
   sensitive = true
 }
+
+variable "github" {
+  type = object({
+    auth = object({
+      token = string
+    })
+  })
+}

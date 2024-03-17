@@ -17,3 +17,8 @@ module "ntfy" {
   source = "./modules/ntfy"
   auth   = var.ntfy
 }
+
+module "github" {
+  source = "./modules/github"
+  auth   = var.github.auth
+}
