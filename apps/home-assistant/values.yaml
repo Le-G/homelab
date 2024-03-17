@@ -13,9 +13,11 @@ app-template:
             repository: docker.io/eclipse-mosquitto
             tag: 2.0
       initContainers:
-      - name: init-config
-        image: busybox
-        command: ['sh', '-c', 'cp /init-config/* /config']
+        init-config:
+          image:
+            repository: docker.io/busybox
+            tag: latest
+          command: ['sh', '-c', 'cp /init-config/* /config']
   service:
     main:
       controller: main
