@@ -5,7 +5,7 @@ renovate:
     config: |
       {
         "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-        "repositories": [{ 'le-g/homelab'];
+        "repositories": ['le-g/homelab'];
         "autodiscover": false,
       }
   existingSecret: renovate-secret
