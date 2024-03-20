@@ -29,6 +29,12 @@ app-template:
           image:
             repository: docker.io/fallenbagel/jellyseerr
             tag: 1.7.0
+    plex:
+      containers:
+        plex:
+          image:
+            repository: lscr.io/linuxserver/plex
+            tag: 1.40.1.8227-c0dd5a73e-ls210
   service:
     main:
       ports:
