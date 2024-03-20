@@ -76,6 +76,6 @@ app-template:
             - path: /var/www/html
               subPath: nextcloud/
         db:
-          db:
+          postgres:
             - path: *pgdata
               subPath: postgres/
