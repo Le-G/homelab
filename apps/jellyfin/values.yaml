@@ -56,6 +56,12 @@ app-template:
         jellyseerr:
           port: 5055
           protocol: HTTP
+    plex:
+      controller: plex
+      ports:
+        plex:
+          port: 32400
+          protocol: TCP
   ingress:
     main:
       enabled: true
@@ -105,6 +111,13 @@ app-template:
               service:
                 name: main
                 port: jellyseerr
+        - host: &plexHost plex.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: plex
+                port: plex
       tls:
         - secretName: jellyfin-tls-certificate
           hosts:
@@ -114,6 +127,7 @@ app-template:
             - *radarrHost
             - *sonarrHost
             - *jellyseerrHost
+            - *plexHost
   persistence:
     data:
       accessMode: ReadWriteOnce
