@@ -12,4 +12,3 @@
         - external-dns
         - global-secrets
         - k8up-operator
-        - zerotier
