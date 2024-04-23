@@ -1,0 +1,34 @@
+app-template:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: ghcr.io/le-g/margauxmedeiros
+            tag: latest
+  service:
+    main:
+      ports:
+        http:
+          port: 80
+          protocol: HTTP
+  ingress:
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      hosts:
+        - host: &host margaux.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: margauxmedeiros-tls-certificate
