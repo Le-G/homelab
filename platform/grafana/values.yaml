@@ -17,7 +17,6 @@ grafana:
     datasources:
       enabled: true
       searchNamespace: monitoring-system
-  envFromSecret: grafana-secrets
   grafana.ini:
     server:
       root_url: https://grafana.le-g.dev
