@@ -71,10 +71,10 @@ app-template:
       accessMode: ReadWriteOnce
       size: 50Gi
       advancedMounts:
-        main:
-          main:
-            - path: /var/www/html
-              subPath: nextcloud/
+        # main:
+        #   main:
+        #     - path: /var/www/html
+        #       subPath: nextcloud/
         db:
           postgres:
             - path: *pgdata
