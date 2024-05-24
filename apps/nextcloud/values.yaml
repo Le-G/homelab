@@ -2,6 +2,12 @@ app-template:
   controllers:
     main:
       containers:
+        initContainers:
+          init-ln:
+            image:
+              repository: docker.io/busybox
+              tag: latest
+            command: ['ln', '-s', '/nas', '/var/www/html']
         main:
           image:
             repository: docker.io/nextcloud
@@ -80,7 +86,8 @@ app-template:
             - path: *pgdata
               subPath: postgres/
     nas:
-      enabled: true
-      type: nfs
-      server: 192.168.1.45
-      path: /Nextcloud
+      test:
+        enabled: true
+        type: nfs
+        server: 192.168.1.45
+        path: /Nextcloud
