@@ -2,12 +2,6 @@ app-template:
   controllers:
     main:
       containers:
-        initContainers:
-          init-ln:
-            image:
-              repository: docker.io/busybox
-              tag: latest
-            command: ['ln', '-s', '/nas', '/var/www/html']
         main:
           image:
             repository: docker.io/nextcloud
