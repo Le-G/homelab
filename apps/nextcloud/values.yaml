@@ -86,8 +86,9 @@ app-template:
             - path: *pgdata
               subPath: postgres/
     nas:
-      test:
-        enabled: true
-        type: nfs
-        server: 192.168.1.45
-        path: /Nextcloud
+      globalMounts:
+        - path: /var/www/html
+      enabled: true
+      type: nfs
+      server: 192.168.1.45
+      path: /Nextcloud
