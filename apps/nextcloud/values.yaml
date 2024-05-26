@@ -54,6 +54,7 @@ app-template:
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/proxy-body-size: 8m
       hosts:
         - host: &host nextcloud.le-g.dev
           paths:
