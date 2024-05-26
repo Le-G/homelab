@@ -81,7 +81,7 @@ app-template:
               subPath: postgres/
     nas:
       globalMounts:
-        - path: /var/www/htmll
+        - path: /var/www/html
       enabled: true
       type: nfs
       server: 192.168.1.45
