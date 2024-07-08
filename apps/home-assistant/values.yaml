@@ -49,7 +49,7 @@ app-template:
           secretName: homeassistant-tls-certificate
   persistence:
     data:
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       size: 1Gi
       globalMounts:
         - path: /config
