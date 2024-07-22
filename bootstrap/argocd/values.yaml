@@ -3,7 +3,7 @@ argo-cd:
     domain: argocd.le-g.dev
   configs:
     params:
-      controller.diff.server.side: "true"
+      controller.diff.server.side: "false"
   server:
     extraArgs:
       - --insecure
