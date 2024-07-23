@@ -24,6 +24,8 @@ app-template:
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       hosts:
         - host: &host password.le-g.dev
           paths:
