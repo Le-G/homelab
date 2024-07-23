@@ -9,3 +9,4 @@ metal:
       hosts:
         luke: {ansible_host: 192.168.1.110, mac: 'e0:70:ea:ae:5a:f3', disk: nvme0n1, network_interface: eno1}
         han: {ansible_host: 192.168.1.111, mac: '00:4e:01:a5:96:80', disk: nvme0n1, network_interface: enp1s0}
+        obiwan: {ansible_host: 192.168.1.112, mac: '8c:04:ba:a6:be:d4', disk: nvme0n1, network_interface: eno1}
