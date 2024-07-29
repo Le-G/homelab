@@ -10,8 +10,7 @@ app-template:
             liveness:
               enabled: false
             readiness:
-              spec:
-                exec: ps -A | grep code-tunnel
+              enabled: false
             startup:
               enabled: false
   service:
