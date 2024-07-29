@@ -6,6 +6,14 @@ app-template:
           image:
             repository: ghcr.io/le-g/headless-code
             tag: latest
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              spec:
+                exec: ps -A | grep code-tunnel
+            startup:
+              enabled: false
   service:
     main:
       ports:
@@ -14,10 +22,8 @@ app-template:
           protocol: HTTP
   persistence:
     data:
-      accessMode: ReadWriteOnce
-      size: 50Gi
-      advancedMounts:
-        main:
-          main:
-            - path: data/
-              subPath: data/
+      accessMode: ReadWriteMany
+      size: 10Gi
+      globalMounts:
+        - path: /home/user
+          readOnly: false
