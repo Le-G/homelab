@@ -6,6 +6,12 @@ app-template:
           image:
             repository: ghcr.io/le-g/headless-code
             tag: latest
+  service:
+    main:
+      ports:
+        http:
+          port: 80
+          protocol: HTTP
   persistence:
     data:
       accessMode: ReadWriteOnce
