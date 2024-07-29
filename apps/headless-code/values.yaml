@@ -26,3 +26,4 @@ app-template:
       globalMounts:
         - path: /home/user
           readOnly: false
+
