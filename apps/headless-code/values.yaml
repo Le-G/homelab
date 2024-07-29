@@ -1,0 +1,17 @@
+app-template:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: ghcr.io/le-g/headless-code
+            tag: latest
+  persistence:
+    data:
+      accessMode: ReadWriteOnce
+      size: 50Gi
+      advancedMounts:
+        main:
+          main:
+            - path: data/
+              subPath: data/
