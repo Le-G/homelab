@@ -17,7 +17,7 @@ app-template:
           image:
             repository: docker.io/busybox
             tag: latest
-          command: ['sh', '-c', 'cp /init-config/* /config']
+          command: ['sh', '-c', 'cp -n /init-config/* /config']
   service:
     main:
       controller: main
