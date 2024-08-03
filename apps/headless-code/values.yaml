@@ -1,4 +1,6 @@
 app-template:
+  defaultPodOptions:
+    hostname: headless-code
   controllers:
     main:
       containers:
