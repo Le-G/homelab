@@ -44,6 +44,9 @@ app-template:
         transmission:
           port: 9091
           protocol: HTTP
+        transmission-torrent:
+          port: 51413
+          protocol: TCP
         prowlarr:
           port: 9696
           protocol: HTTP
