@@ -44,9 +44,6 @@ app-template:
         transmission:
           port: 9091
           protocol: HTTP
-        transmission-torrent:
-          port: 51413
-          protocol: TCP
         prowlarr:
           port: 9696
           protocol: HTTP
@@ -59,6 +56,12 @@ app-template:
         jellyseerr:
           port: 5055
           protocol: HTTP
+    torrent:
+      controller: main
+      type: ClusterIP
+      ports:
+        http:
+          port: 51413
     plex:
       controller: plex
       ports:
