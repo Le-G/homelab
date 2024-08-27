@@ -8,3 +8,4 @@ ingress-nginx:
         enabled: true
   tcp:
     1883: home-assistant/home-assistant:1883
+    51413: jellyfin/jellyfin:51413
