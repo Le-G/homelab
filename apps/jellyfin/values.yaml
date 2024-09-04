@@ -10,6 +10,9 @@ app-template:
             repository: docker.io/jellyfin/jellyfin
             tag: 10.8.13
         transmission:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: lscr.io/linuxserver/transmission
             tag: 4.0.5
@@ -18,10 +21,16 @@ app-template:
             repository: lscr.io/linuxserver/prowlarr
             tag: 1.11.4
         radarr:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: lscr.io/linuxserver/radarr
             tag: 5.2.6
         sonarr:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: lscr.io/linuxserver/sonarr
             tag: 4.0.0
