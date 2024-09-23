@@ -43,7 +43,7 @@ app-template:
         plex:
           image:
             repository: lscr.io/linuxserver/plex
-            tag: 1.40.1.8227-c0dd5a73e-ls210
+            tag: 1.41.0
   service:
     main:
       ports:
