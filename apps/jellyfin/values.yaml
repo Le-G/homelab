@@ -199,5 +199,5 @@ app-template:
     nas:
       enabled: true
       type: nfs
-      server: 192.168.1.45
-      path: /Plex
+      server: 192.168.1.181
+      path: /mnt/main/medias
