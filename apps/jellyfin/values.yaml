@@ -161,7 +161,7 @@ app-template:
   persistence:
     data:
       accessMode: ReadWriteOnce
-      size: 50Gi
+      size: 200Gi
       advancedMounts:
         main:
           main:
