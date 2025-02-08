@@ -8,7 +8,7 @@ app-template:
         main:
           image:
             repository: docker.io/jellyfin/jellyfin
-            tag: 10.8.13
+            tag: 10.10.5
         transmission:
           env:
             PUID: 0
