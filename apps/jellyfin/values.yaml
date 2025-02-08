@@ -84,24 +84,32 @@ app-template:
       controller: plex
       ports:
         plex:
-          - port: 32400
-            protocol: TCP
-          - port: 1900
-            protocol: UDP
-          - port: 5353
-            protocol: UDP
-          - port: 8324
-            protocol: TCP
-          - port: 32410
-            protocol: UDP
-          - port: 32412
-            protocol: UDP
-          - port: 32413
-            protocol: UDP
-          - port: 32414
-            protocol: UDP
-          - port: 32469
-            protocol: TCP
+          port: 32400
+          protocol: TCP
+        dlna-udp:
+          port: 1900
+          protocol: UDP
+        discovery:
+          port: 5353
+          protocol: UDP
+        companion:
+          port: 8324
+          protocol: TCP
+        gdm1:
+          port: 32410
+          protocol: UDP
+        gdm2:
+          port: 32412
+          protocol: UDP
+        gdm3:
+          port: 32413
+          protocol: UDP
+        gdm4:
+          port: 32414
+          protocol: UDP
+        dlna:
+          port: 32469
+          protocol: TCP
   ingress:
     main:
       enabled: true
