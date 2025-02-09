@@ -82,6 +82,7 @@ app-template:
           port: 51413
     plex:
       controller: plex
+      type: ClusterIP
       ports:
         plex:
           port: 32400

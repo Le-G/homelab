@@ -9,3 +9,12 @@ ingress-nginx:
   tcp:
     1883: home-assistant/home-assistant:1883
     51413: jellyfin/jellyfin-torrent:51413
+    32400: jellyfin/jellyfin-plex:32400
+    1900: jellyfin/jellyfin-plex:1900
+    5353: jellyfin/jellyfin-plex:5353
+    8324: jellyfin/jellyfin-plex:8324
+    32410: jellyfin/jellyfin-plex:32410
+    32412: jellyfin/jellyfin-plex:32412
+    32413: jellyfin/jellyfin-plex:32413
+    32414: jellyfin/jellyfin-plex:32414
+    32469: jellyfin/jellyfin-plex:32469
