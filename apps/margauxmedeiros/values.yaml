@@ -1,7 +1,8 @@
 controllers:
   main:
+    strategy: Recreate
     containers:
-      margaux-web:
+      main:
         image:
           repository: ghcr.io/le-g/margauxmedeiros
           tag: 0.0.4
@@ -26,9 +27,13 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
               port: http
     tls:
       - hosts:
           - *host
         secretName: margauxmedeiros-tls-certificate
+
+persistence:
+  config:
+    enabled: false
