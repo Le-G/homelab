@@ -1,12 +1,13 @@
 controllers:
   main:
     containers:
-      main:
+      margaux-web:
         image:
           repository: ghcr.io/le-g/margauxmedeiros
           tag: 0.0.4
 service:
   main:
+    controller: main
     ports:
       http:
         port: 80
@@ -25,7 +26,7 @@ ingress:
           - path: /
             pathType: Prefix
             service:
-              identifier: main
+              name: main
               port: http
     tls:
       - hosts:
