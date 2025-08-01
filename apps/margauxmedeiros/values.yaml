@@ -1,5 +1,6 @@
 controllers:
   main:
+    strategy: Recreate
     containers:
       main:
         image:
@@ -7,6 +8,7 @@ controllers:
           tag: 0.0.4
 service:
   main:
+    controller: main
     ports:
       http:
         port: 80
@@ -31,3 +33,7 @@ ingress:
       - hosts:
           - *host
         secretName: margauxmedeiros-tls-certificate
+
+persistence:
+  config:
+    enabled: false
