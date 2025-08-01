@@ -1,0 +1,67 @@
+# Updated values.yaml for n8n accessible at n8n.le-g.dev
+n8n:
+  # Define hostname anchor at the top
+  shared_config:
+    hostname: &hostname n8n.le-g.dev
+    url: &url https://n8n.le-g.dev
+
+  main:
+    config:
+      n8n:
+        editor_base_url: *url
+      # Use SQLite for simplicity (no external DB needed)
+      db:
+        type: sqlite
+      # webhook related settings
+      webhook_url: *url
+    
+    secret:
+      n8n:
+        encryption_key:
+          valueFrom:
+            secretKeyRef:
+              name: n8n-secrets
+              key: encryption_key
+    
+    resources:
+      limits:
+        memory: 1024Mi
+      requests:
+        memory: 256Mi
+        cpu: 100m
+
+  # Enable Redis for queue (using built-in valkey)
+  valkey:
+    enabled: true
+    architecture: standalone
+    sentinel:
+      enabled: false
+    auth:
+      enabled: false
+    primary:
+      kind: Deployment
+      persistence:
+        enabled: false
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 50m
+
+  # Ingress configuration matching your pattern
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - host: *hostname
+        paths:
+          - /
+    tls:
+      - secretName: n8n-ingress-tls
+        hosts:
+          - *hostname
