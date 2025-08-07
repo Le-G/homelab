@@ -61,9 +61,14 @@ postgresql:
           userPasswordKey: postgres-password
     security:
       allowInsecureImages: true
-  # Temporarily use standard PostgreSQL to debug
-  # image:
-  #   registry: ghcr.io
-  #   repository: tensorchord/pgvecto-rs
-  #   tag: pg17-v0.4.0
+  image:
+    registry: ghcr.io
+    repository: tensorchord/pgvecto-rs
+    tag: pg17-v0.4.0
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
 
