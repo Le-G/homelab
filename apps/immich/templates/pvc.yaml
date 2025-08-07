@@ -24,4 +24,5 @@ spec:
   resources:
     requests:
       storage: 1000Gi
-  volumeName: immich-nas-pv 
+  volumeName: immich-nas-pv
+  storageClassName: "" 
