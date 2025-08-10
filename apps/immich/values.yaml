@@ -68,6 +68,7 @@ postgresql:
   initdbScripts:
     enable-vector.sql: |
       CREATE EXTENSION IF NOT EXISTS vector;
+      CREATE DATABASE immich;
 
 redis:
   enabled: true
