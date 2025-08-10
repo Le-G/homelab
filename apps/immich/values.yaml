@@ -66,6 +66,8 @@ postgresql:
     repository: le-g/homelab/pg
     tag: 16
     pullPolicy: Always
+  postgresql:
+    sharedPreloadLibraries: "pgaudit,vectors"
   initdbScripts:
     enable-vector.sql: |
       CREATE EXTENSION IF NOT EXISTS vectors;
