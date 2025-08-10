@@ -64,11 +64,11 @@ postgresql:
   image:
     registry: ghcr.io
     repository: le-g/homelab/pg
-    tag: latest
+    tag: 17
+    pullPolicy: Always
   initdbScripts:
     enable-vector.sql: |
-      CREATE EXTENSION IF NOT EXISTS vector;
-      CREATE DATABASE immich;
+      CREATE EXTENSION IF NOT EXISTS vectors;
 
 redis:
   enabled: true
