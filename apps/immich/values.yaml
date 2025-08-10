@@ -63,8 +63,8 @@ postgresql:
       allowInsecureImages: true
   image:
     registry: ghcr.io
-    repository: tensorchord/pgvecto-rs
-    tag: pg17-v0.4.0
+    repository: le-g/homelab/pg
+    tag: latest
 
 redis:
   enabled: true
