@@ -73,8 +73,8 @@ postgresql:
         enable-vector.sql: |
           -- This script runs as postgres superuser during database initialization
           CREATE EXTENSION IF NOT EXISTS vectors;
-          -- Grant usage permissions to immich user
-          GRANT USAGE ON SCHEMA vectors TO immich;
+          -- Grant superuser privileges to immich user so it can create any extension
+          ALTER USER immich WITH SUPERUSER;
 
 redis:
   enabled: true
