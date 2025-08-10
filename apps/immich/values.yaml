@@ -66,8 +66,7 @@ postgresql:
     repository: le-g/homelab/pg
     tag: 16
     pullPolicy: Always
-  postgresql:
-    sharedPreloadLibraries: "pgaudit,vectors"
+  postgresqlSharedPreloadLibraries: 'pgaudit,vectors'
   primary:
     initdb:
       scripts:
