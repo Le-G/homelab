@@ -68,13 +68,14 @@ postgresql:
     pullPolicy: Always
   postgresql:
     sharedPreloadLibraries: "pgaudit,vectors"
-  initdb:
-    scripts:
-      enable-vector.sql: |
-        -- This script runs as postgres superuser during database initialization
-        CREATE EXTENSION IF NOT EXISTS vectors;
-        -- Grant usage permissions to immich user
-        GRANT USAGE ON SCHEMA vectors TO immich;
+  primary:
+    initdb:
+      scripts:
+        enable-vector.sql: |
+          -- This script runs as postgres superuser during database initialization
+          CREATE EXTENSION IF NOT EXISTS vectors;
+          -- Grant usage permissions to immich user
+          GRANT USAGE ON SCHEMA vectors TO immich;
 
 redis:
   enabled: true
