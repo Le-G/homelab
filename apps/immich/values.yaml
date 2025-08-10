@@ -64,7 +64,7 @@ postgresql:
   image:
     registry: ghcr.io
     repository: le-g/homelab/pg
-    tag: 17
+    tag: 16
     pullPolicy: Always
   initdbScripts:
     enable-vector.sql: |
