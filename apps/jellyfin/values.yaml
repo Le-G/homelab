@@ -21,21 +21,21 @@ app-template:
         prowlarr:
           image:
             repository: lscr.io/linuxserver/prowlarr
-            tag: 1.30.2
+            tag: 2.0.5
         radarr:
           env:
             PUID: 0
             PGID: 0
           image:
             repository: lscr.io/linuxserver/radarr
-            tag: 5.2.6
+            tag: 5.26.2
         sonarr:
           env:
             PUID: 0
             PGID: 0
           image:
             repository: lscr.io/linuxserver/sonarr
-            tag: 4.0.0
+            tag: 4.0.15
         jellyseerr:
           image:
             repository: docker.io/fallenbagel/jellyseerr
