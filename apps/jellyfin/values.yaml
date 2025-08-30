@@ -26,6 +26,28 @@ app-template:
             repository: lscr.io/linuxserver/transmission
             tag: 4.0.6
     prowlarr:
+      initContainers:
+        ygg-definitions:
+          image:
+            repository: docker.io/curlimages/curl
+            tag: 8.11.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Downloading YGG indexer definitions..."
+              mkdir -p /shared/custom-definitions
+              
+              # Download yggtorrent.yml
+              curl -fsSL "https://raw.githubusercontent.com/Prowlarr/Indexers/17e54db771ee41658a26fe96e5529574724f633f/definitions/v11/yggtorrent.yml" \
+                -o /shared/custom-definitions/yggtorrent.yml
+              
+              # Download yggcookie.yml  
+              curl -fsSL "https://raw.githubusercontent.com/Prowlarr/Indexers/17e54db771ee41658a26fe96e5529574724f633f/definitions/v11/yggcookie.yml" \
+                -o /shared/custom-definitions/yggcookie.yml
+              
+              echo "YGG definitions downloaded successfully!"
+              ls -la /shared/custom-definitions/
       containers:
         main:
           env:
@@ -284,3 +306,13 @@ app-template:
       type: nfs
       server: 192.168.1.181
       path: /mnt/main/medias
+    shared-definitions:
+      enabled: true
+      type: emptyDir
+      advancedMounts:
+        prowlarr:
+          ygg-definitions:
+            - path: /shared
+          main:
+            - path: /config/Definitions/Custom
+              subPath: custom-definitions
