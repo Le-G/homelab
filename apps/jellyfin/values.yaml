@@ -3,9 +3,14 @@ app-template:
     securityContext:
       fsGroup: 1000
   controllers:
+    main:
+      enabled: false
     jellyfin:
       containers:
         main:
+          env:
+            PUID: 1000
+            PGID: 1000
           image:
             repository: docker.io/jellyfin/jellyfin
             tag: 10.10.7
@@ -23,6 +28,9 @@ app-template:
     prowlarr:
       containers:
         main:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: lscr.io/linuxserver/prowlarr
             tag: 2.0.5
@@ -47,6 +55,9 @@ app-template:
     jellyseerr:
       containers:
         main:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: docker.io/fallenbagel/jellyseerr
             tag: 1.7.0
@@ -59,10 +70,15 @@ app-template:
     plex:
       containers:
         main:
+          env:
+            PUID: 0
+            PGID: 0
           image:
             repository: lscr.io/linuxserver/plex
             tag: 1.41.0
   service:
+    main:
+      enabled: false
     jellyfin:
       controller: jellyfin
       ports:
@@ -139,7 +155,7 @@ app-template:
           port: 32469
           protocol: TCP
   ingress:
-    main:
+    media-stack:
       enabled: true
       className: nginx
       annotations:
