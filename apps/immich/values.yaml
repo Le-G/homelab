@@ -5,6 +5,7 @@ immich:
     url: &url https://immich.le-g.dev
 
   env:
+    REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
     DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
     DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
     DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
