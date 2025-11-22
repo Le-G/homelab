@@ -5,6 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
+    email: {{ .Values.acme.email | required "acme.email is required" }}
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -13,3 +14,6 @@ spec:
           apiTokenSecretRef:
             name: cloudflare-api-token
             key: api-token
+          {{- if .Values.acme.cloudflare.zoneID }}
+          zoneID: {{ .Values.acme.cloudflare.zoneID }}
+          {{- end }}
