@@ -8,5 +8,4 @@ cert-manager:
 acme:
   # Email address for Let's Encrypt registration (required)
   email: "me@le-g.dev"
-  # Note: zoneID is not supported in cert-manager v1.11.2
-  # The API token will automatically discover the zone
+  # Zone ID is explicitly set in the ClusterIssuer template for le-g.dev
