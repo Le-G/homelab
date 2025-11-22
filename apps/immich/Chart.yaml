@@ -3,7 +3,7 @@ name: immich
 version: 0.0.0
 dependencies:
   - name: immich
-    version: 0.9.3
+    version: 0.10.3
     repository: oci://ghcr.io/immich-app/immich-charts
   - name: postgresql
     version: 16.7.21
