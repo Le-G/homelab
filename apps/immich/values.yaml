@@ -4,18 +4,22 @@ immich:
     hostname: &hostname immich.le-g.dev
     url: &url https://immich.le-g.dev
 
-  env:
-    REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
-    DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
-    DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
-    DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
-    # Database password is now provided via external secret
-    DB_PASSWORD:
-      valueFrom:
-        secretKeyRef:
-          name: immich-postgresql-secret
-          key: postgres-password
-    IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+  controllers:
+    main:
+      containers:
+        main:
+          env:
+            REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
+            DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+            DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
+            DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-postgresql-secret
+                  key: postgres-password
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+
   immich:
     metrics:
       # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
