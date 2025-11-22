@@ -14,4 +14,3 @@ spec:
           apiTokenSecretRef:
             name: cloudflare-api-token
             key: api-token
-          zoneID: 9a86bded0d2099191967bd93db8114bb
