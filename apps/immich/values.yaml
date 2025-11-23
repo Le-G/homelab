@@ -19,7 +19,7 @@ immich:
         main:
           env:
             REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
-            DB_HOSTNAME: "{{ .Values.db.hostname }}"
+            DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
             DB_USERNAME: "{{ .Values.db.username }}"
             DB_DATABASE_NAME: "{{ .Values.db.database }}"
             DB_PASSWORD:
