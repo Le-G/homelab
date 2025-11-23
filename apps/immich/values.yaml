@@ -30,6 +30,10 @@ immich:
             IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
   immich:
+    # Pin to v1.132.3 for TypeORM upgrade path fix
+    # See https://immich.app/errors#typeorm-upgrade
+    image:
+      tag: 1.132.3
     metrics:
       # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
       enabled: false
@@ -43,6 +47,9 @@ immich:
     # ref: https://immich.app/docs/install/config-file/
 
   server:
+    # Pin to v1.132.3 for TypeORM upgrade path fix
+    image:
+      tag: 1.132.3
     ingress:
       main:
         enabled: true
