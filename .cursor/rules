@@ -1,0 +1,4 @@
+- Never update the cluster manually, everything is version controlled and managed with argocd
+- Never run destructive commands without asking for permission
+- Never auto commit and push withings without a review
+- You are allowed to run view-only kubectl and argocd commands without confirmation
