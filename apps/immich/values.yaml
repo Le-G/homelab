@@ -41,28 +41,33 @@ immich:
         existingClaim: immich-nas-pvc
     # configuration is immich-config.json converted to yaml
     # ref: https://immich.app/docs/install/config-file/
-
-  server:
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-          nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        hosts:
-          - host: *hostname
-            paths:
-              - path: "/"
-        tls:
-          - secretName: immich-ingress-tls
-            hosts:
-              - *hostname
+    # Pin to v1.132.3 for intermediate upgrade path (required before upgrading to v2.0.0+)
+    server:
+      image:
+        tag: v1.132.3
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+            external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
+            external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+            nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          hosts:
+            - host: *hostname
+              paths:
+                - path: "/"
+          tls:
+            - secretName: immich-ingress-tls
+              hosts:
+                - *hostname
+    machineLearning:
+      image:
+        tag: v1.132.3
 postgresql:
   global:
     postgresql:
