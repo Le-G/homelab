@@ -254,6 +254,7 @@ app-template:
     data:
       accessMode: ReadWriteOnce
       size: 200Gi
+      storageClassName: longhorn
       advancedMounts:
         jellyfin:
           main:
@@ -267,8 +268,8 @@ app-template:
           main:
             - path: /config
               subPath: transmission/config
-            - path: /downloads
-              subPath: transmission/downloads
+            - path: /downloads/incomplete
+              subPath: transmission/downloads/incomplete
         prowlarr:
           main:
             - path: /config
@@ -277,16 +278,12 @@ app-template:
           main:
             - path: /config
               subPath: radarr/config
-            - path: /downloads/complete
-              subPath: transmission/downloads/complete
             - path: /movies
               subPath: movies
         sonarr:
           main:
             - path: /config
               subPath: sonarr/config
-            - path: /downloads/complete
-              subPath: transmission/downloads/complete
             - path: /shows
               subPath: shows
         jellyseerr:
@@ -306,6 +303,19 @@ app-template:
       type: nfs
       server: 192.168.1.181
       path: /mnt/main/medias
+      advancedMounts:
+        transmission:
+          main:
+            - path: /downloads/complete
+              subPath: downloads/complete
+        radarr:
+          main:
+            - path: /downloads/complete
+              subPath: downloads/complete
+        sonarr:
+          main:
+            - path: /downloads/complete
+              subPath: downloads/complete
     shared-definitions:
       enabled: true
       type: emptyDir
