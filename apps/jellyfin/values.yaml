@@ -274,14 +274,10 @@ app-template:
           main:
             - path: /config
               subPath: radarr/config
-            - path: /movies
-              subPath: movies
         sonarr:
           main:
             - path: /config
               subPath: sonarr/config
-            - path: /shows
-              subPath: shows
         jellyseerr:
           main:
             - path: /app/config
@@ -311,10 +307,14 @@ app-template:
           main:
             - path: /downloads/complete
               subPath: downloads/complete
+            - path: /movies
+              subPath: media/movies
         sonarr:
           main:
             - path: /downloads/complete
               subPath: downloads/complete
+            - path: /tvshows
+              subPath: media/tvshows
     shared-definitions:
       enabled: true
       type: emptyDir
