@@ -45,22 +45,26 @@ immich:
   # Pin to v1.132.3 for intermediate upgrade path (required before upgrading to v2.0.0+)
   server:
     # Configure persistence mounts for the server component
-    # Mount subdirectories to /usr/src/app/ where Immich expects them
-    # encoded-video is a subdirectory of upload, so it will be accessible via /usr/src/app/upload/encoded-video/
+    # Mount the upload subdirectory from PVC to /usr/src/app/upload where Immich expects it
+    # The NFS structure should have: upload/, library/, thumbs/, profile/, encoded-video/ as siblings
+    # We mount upload/ to /usr/src/app/upload, and other dirs as subdirectories
     persistence:
       data:
         globalMounts:
           - path: /usr/src/app/upload
             subPath: upload
             readOnly: false
-          - path: /usr/src/app/library
+          - path: /usr/src/app/upload/library
             subPath: library
             readOnly: false
-          - path: /usr/src/app/profile
+          - path: /usr/src/app/upload/thumbs
+            subPath: thumbs
+            readOnly: false
+          - path: /usr/src/app/upload/profile
             subPath: profile
             readOnly: false
-          - path: /usr/src/app/thumbs
-            subPath: thumbs
+          - path: /usr/src/app/upload/encoded-video
+            subPath: encoded-video
             readOnly: false
     controllers:
       main:
@@ -68,6 +72,12 @@ immich:
           main:
             image:
               tag: v1.132.3
+            env:
+              UPLOAD_LOCATION: /usr/src/app/upload
+              LIBRARY_LOCATION: /usr/src/app/upload/library
+              THUMBNAIL_LOCATION: /usr/src/app/upload/thumbs
+              PROFILE_LOCATION: /usr/src/app/upload/profile
+              ENCODED_VIDEO_LOCATION: /usr/src/app/upload/encoded-video
     ingress:
       main:
         enabled: true
