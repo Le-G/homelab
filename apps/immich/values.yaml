@@ -99,22 +99,6 @@ immich:
           main:
             image:
               tag: v1.132.3
-  microservices:
-    controllers:
-      main:
-        containers:
-          main:
-            env:
-              REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
-              DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
-              DB_USERNAME: "{{ .Values.db.username }}"
-              DB_DATABASE_NAME: "{{ .Values.db.database }}"
-              DB_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: "{{ .Values.db.passwordSecret.name }}"
-                    key: "{{ .Values.db.passwordSecret.key }}"
-              IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 postgresql:
   global:
     postgresql:
@@ -134,6 +118,13 @@ postgresql:
     pullPolicy: Always
   postgresqlSharedPreloadLibraries: 'pgaudit,vectors'
   primary:
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 250m
+      limits:
+        memory: 1Gi
+        cpu: 500m
     initdb:
       scripts:
         enable-vector.sql: |
