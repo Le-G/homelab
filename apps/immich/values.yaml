@@ -61,6 +61,17 @@ immich:
             image:
               tag: v1.132.3
             workingDir: /usr/src/app
+            env:
+              REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
+              DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+              DB_USERNAME: "{{ .Values.db.username }}"
+              DB_DATABASE_NAME: "{{ .Values.db.database }}"
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: "{{ .Values.db.passwordSecret.name }}"
+                    key: "{{ .Values.db.passwordSecret.key }}"
+              IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
     ingress:
       main:
         enabled: true
@@ -88,6 +99,22 @@ immich:
           main:
             image:
               tag: v1.132.3
+  microservices:
+    controllers:
+      main:
+        containers:
+          main:
+            env:
+              REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
+              DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+              DB_USERNAME: "{{ .Values.db.username }}"
+              DB_DATABASE_NAME: "{{ .Values.db.database }}"
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: "{{ .Values.db.passwordSecret.name }}"
+                    key: "{{ .Values.db.passwordSecret.key }}"
+              IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 postgresql:
   global:
     postgresql:
