@@ -40,6 +40,7 @@ app-template:
           secretName: vaultwarden-tls-certificate
   persistence:
     data:
+      enabled: true
       accessMode: ReadWriteOnce
       size: 1Gi
       globalMounts:
