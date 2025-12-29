@@ -6,6 +6,8 @@ n8n:
     url: &url https://n8n.le-g.dev
 
   main:
+    service:
+      port: 80
     config:
       n8n:
         editor_base_url: *url
@@ -64,7 +66,9 @@ n8n:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
     hosts:
       - host: *hostname
-        path: /
+        paths:
+          - path: /
+            pathType: Prefix
     tls:
       - secretName: n8n-ingress-tls
         hosts:
