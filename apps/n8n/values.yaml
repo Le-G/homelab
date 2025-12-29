@@ -29,6 +29,11 @@ n8n:
       requests:
         memory: 256Mi
         cpu: 100m
+    
+    persistence:
+      enabled: true
+      size: 10Gi
+      accessMode: ReadWriteOnce
 
   # Enable Redis for queue (using built-in valkey)
   valkey:
