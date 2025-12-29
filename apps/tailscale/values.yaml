@@ -18,6 +18,14 @@ app-template:
                 secretKeyRef:
                   name: tailscale-auth
                   key: TS_AUTHKEY
+            POD_NAME:
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            POD_UID:
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
           securityContext:
             capabilities:
               add:

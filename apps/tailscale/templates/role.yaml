@@ -14,3 +14,6 @@ rules:
   resourceNames: ["tailscale"]
   resources: ["secrets"]
   verbs: ["get", "update", "patch"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "create", "patch"]
