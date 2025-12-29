@@ -64,8 +64,7 @@ n8n:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
     hosts:
       - host: *hostname
-        paths:
-          - /
+        path: /
     tls:
       - secretName: n8n-ingress-tls
         hosts:
