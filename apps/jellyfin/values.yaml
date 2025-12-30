@@ -252,7 +252,7 @@ app-template:
             - *flaresolverrHost
   persistence:
     data:
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       size: 200Gi
       storageClassName: longhorn
       advancedMounts:
