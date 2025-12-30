@@ -82,7 +82,7 @@ app-template:
             PGID: 0
           image:
             repository: docker.io/fallenbagel/jellyseerr
-            tag: 1.7.0
+            tag: 2.7.3
     flaresolverr:
       containers:
         main:
