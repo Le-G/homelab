@@ -177,7 +177,7 @@ app-template:
           port: 32469
           protocol: TCP
   ingress:
-    media-stack:
+    public:
       enabled: true
       className: nginx
       annotations:
@@ -192,6 +192,24 @@ app-template:
               service:
                 name: jellyfin
                 port: http
+        - host: &jellyseerrHost jellyseerr.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: jellyseerr
+                port: http
+      tls:
+        - secretName: jellyfin-tls-certificate
+          hosts:
+            - *jellyfinHost
+            - *jellyseerrHost
+    media-stack:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
         - host: &transmissionHost transmission.le-g.dev
           paths:
             - path: /
@@ -220,13 +238,6 @@ app-template:
               service:
                 name: sonarr
                 port: http
-        - host: &jellyseerrHost jellyseerr.le-g.dev
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: jellyseerr
-                port: http
         - host: &flaresolverrHost flaresolverr.le-g.dev
           paths:
             - path: /
@@ -244,12 +255,10 @@ app-template:
       tls:
         - secretName: jellyfin-tls-certificate
           hosts:
-            - *jellyfinHost
             - *transmissionHost
             - *prowlarrHost
             - *radarrHost
             - *sonarrHost
-            - *jellyseerrHost
             - *plexHost
             - *flaresolverrHost
   persistence:
