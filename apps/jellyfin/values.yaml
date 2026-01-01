@@ -200,7 +200,7 @@ app-template:
                 name: jellyseerr
                 port: http
       tls:
-        - secretName: jellyfin-tls-certificate
+        - secretName: jellyfin-public-tls-certificate
           hosts:
             - *jellyfinHost
             - *jellyseerrHost
