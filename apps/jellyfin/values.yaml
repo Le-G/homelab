@@ -75,6 +75,12 @@ app-template:
             repository: lscr.io/linuxserver/sonarr
             tag: 4.0.15
     jellyseerr:
+      initContainers:
+        init-logs:
+          image:
+            repository: docker.io/busybox
+            tag: latest
+          command: ['sh', '-c', 'mkdir -p /app/config/logs && chmod 777 /app/config/logs']
       containers:
         main:
           env:
