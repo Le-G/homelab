@@ -275,8 +275,6 @@ app-template:
           main:
             - path: /config
               subPath: transmission/config
-            - path: /downloads/incomplete
-              subPath: transmission/downloads/incomplete
         prowlarr:
           main:
             - path: /config
@@ -312,6 +310,8 @@ app-template:
             - path: /media
         transmission:
           main:
+            - path: /downloads/incomplete
+              subPath: downloads/incomplete
             - path: /downloads/complete
               subPath: downloads/complete
         radarr:
