@@ -4,7 +4,7 @@ cilium_namespace: kube-system
 cilium_values:
   operator:
     replicas: 1
-  kubeProxyReplacement: true
+  kubeProxyReplacement: false
   l2announcements:
     enabled: true
   # TODO the host and port are k3s-specific, generic solution is in progress
