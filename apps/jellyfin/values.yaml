@@ -13,7 +13,7 @@ app-template:
             PGID: 1000
           image:
             repository: docker.io/jellyfin/jellyfin
-            tag: 10.10.7
+            tag: 10.11.6
     transmission:
       containers:
         main:
