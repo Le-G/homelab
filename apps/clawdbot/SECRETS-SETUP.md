@@ -1,8 +1,6 @@
 # ClawdBot Secrets Setup - Manual Method
 
-## Quick Setup
-
-Run these commands to manually create the secrets in your Kubernetes cluster:
+## Minimal Setup (Required)
 
 ### 1. Generate and Create Gateway Token
 
@@ -12,26 +10,60 @@ kubectl -n global-secrets create secret generic clawdbot.gateway-token \
   --from-literal=gateway-token="$(openssl rand -hex 32)"
 ```
 
-### 2. Add Claude Credentials (Optional)
+This is the **only required secret** for basic ClawdBot functionality.
 
-If you want to use Claude API features, add your credentials:
+## Optional: Add Claude Credentials
 
-```bash
-kubectl -n global-secrets create secret generic clawdbot.claude-ai-session-key \
-  --from-literal=claude-ai-session-key="your-session-key-here"
+If you want to use Claude API features, you'll need to:
 
-kubectl -n global-secrets create secret generic clawdbot.claude-web-session-key \
-  --from-literal=claude-web-session-key="your-web-session-key-here"
+1. **Create the secrets in Kubernetes**
+2. **Uncomment the env vars** in `values.yaml`
+3. **Uncomment the secret mappings** in `templates/secret.yaml`
 
-kubectl -n global-secrets create secret generic clawdbot.claude-web-cookie \
-  --from-literal=claude-web-cookie="your-cookie-here"
-```
+### 2a. Get Claude Credentials
 
-**How to get Claude credentials:**
 1. Open Claude.ai in your browser (logged in)
 2. Open Developer Tools (F12)
 3. Go to Application/Storage → Cookies
 4. Find and copy the session values
+
+### 2b. Create Claude Secret(s)
+
+Create only the secrets you need (pick 1, 2, or all 3):
+
+```bash
+# Option 1: Claude AI session key
+kubectl -n global-secrets create secret generic clawdbot.claude-ai-session-key \
+  --from-literal=claude-ai-session-key="your-session-key-here"
+
+# Option 2: Claude web session key
+kubectl -n global-secrets create secret generic clawdbot.claude-web-session-key \
+  --from-literal=claude-web-session-key="your-web-session-key-here"
+
+# Option 3: Claude web cookie
+kubectl -n global-secrets create secret generic clawdbot.claude-web-cookie \
+  --from-literal=claude-web-cookie="your-cookie-here"
+```
+
+### 2c. Enable in Configuration
+
+For each secret you created, uncomment the corresponding sections in:
+
+**`values.yaml`** - Uncomment the env var(s):
+```yaml
+# CLAUDE_AI_SESSION_KEY:
+#   valueFrom:
+#     secretKeyRef:
+#       name: clawdbot-secret
+#       key: claude-ai-session-key
+```
+
+**`templates/secret.yaml`** - Uncomment the data mapping(s):
+```yaml
+# - secretKey: claude-ai-session-key
+#   remoteRef:
+#     key: clawdbot.claude-ai-session-key
+```
 
 ### 3. Verify Secrets
 

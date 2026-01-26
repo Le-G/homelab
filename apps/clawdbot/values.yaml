@@ -36,24 +36,22 @@ app-template:
                 secretKeyRef:
                   name: clawdbot-secret
                   key: gateway-token
-            CLAUDE_AI_SESSION_KEY:
-              valueFrom:
-                secretKeyRef:
-                  name: clawdbot-secret
-                  key: claude-ai-session-key
-                  optional: true
-            CLAUDE_WEB_SESSION_KEY:
-              valueFrom:
-                secretKeyRef:
-                  name: clawdbot-secret
-                  key: claude-web-session-key
-                  optional: true
-            CLAUDE_WEB_COOKIE:
-              valueFrom:
-                secretKeyRef:
-                  name: clawdbot-secret
-                  key: claude-web-cookie
-                  optional: true
+            # Uncomment the Claude credentials you need:
+            # CLAUDE_AI_SESSION_KEY:
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: clawdbot-secret
+            #       key: claude-ai-session-key
+            # CLAUDE_WEB_SESSION_KEY:
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: clawdbot-secret
+            #       key: claude-web-session-key
+            # CLAUDE_WEB_COOKIE:
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: clawdbot-secret
+            #       key: claude-web-cookie
 
           probes:
             liveness:
