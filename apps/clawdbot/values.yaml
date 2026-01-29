@@ -27,6 +27,7 @@ app-template:
             - lan
             - --port
             - "18789"
+            - --allow-unconfigured
 
           env:
             HOME: /home/node
