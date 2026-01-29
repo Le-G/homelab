@@ -32,7 +32,7 @@ app-template:
           env:
             HOME: /home/node
             TERM: xterm-256color
-            NODE_OPTIONS: "--max-old-space-size=1024"
+            NODE_OPTIONS: "--max-old-space-size=2560"
             CLAWDBOT_GATEWAY_TOKEN:
               valueFrom:
                 secretKeyRef:
@@ -66,9 +66,9 @@ app-template:
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 512Mi
             limits:
-              memory: 1Gi
+              memory: 3Gi
 
   service:
     gateway:
