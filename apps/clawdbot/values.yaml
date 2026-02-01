@@ -102,20 +102,12 @@ app-template:
             - *host
 
   persistence:
-    config:
+    # Single PVC for entire home directory - preserves .git-credentials, .gitconfig, etc.
+    home:
       enabled: true
       type: persistentVolumeClaim
       storageClass: longhorn
       accessMode: ReadWriteOnce
-      size: 1Gi
+      size: 15Gi
       globalMounts:
-        - path: /home/node/.clawdbot
-
-    workspace:
-      enabled: true
-      type: persistentVolumeClaim
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      size: 10Gi
-      globalMounts:
-        - path: /home/node/clawd
+        - path: /home/node
