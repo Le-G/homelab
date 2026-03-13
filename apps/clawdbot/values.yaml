@@ -38,7 +38,16 @@ app-template:
                 secretKeyRef:
                   name: clawdbot-secret
                   key: gateway-token
-            # Uncomment the Claude credentials you need:
+            # Recommended: Anthropic API key for model access
+            # ANTHROPIC_API_KEY:
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: clawdbot-secret
+            #       key: anthropic-api-key
+            #
+            # DEPRECATED - These legacy Claude.ai session credentials are no longer used.
+            # Modern Clawdbot uses ANTHROPIC_API_KEY or OAuth via `clawdbot models auth`.
+            # Kept for reference only - safe to remove:
             # CLAUDE_AI_SESSION_KEY:
             #   valueFrom:
             #     secretKeyRef:
