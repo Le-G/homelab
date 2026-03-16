@@ -1,0 +1,85 @@
+app-template:
+  controllers:
+    main:
+      type: deployment
+      replicas: 1
+      strategy: Recreate
+
+      containers:
+        main:
+          image:
+            repository: docker.io/opencloudeu/opencloud-rolling
+            tag: 5.2.0
+          env:
+            OC_URL: https://files.le-g.dev
+            PROXY_HTTP_ADDR: 0.0.0.0:9200
+            OC_INSECURE: "false"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ ! -f /etc/opencloud/.initialized ]; then
+                /usr/bin/opencloud init
+                touch /etc/opencloud/.initialized
+              fi
+              exec /usr/bin/opencloud server
+
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 9200
+          protocol: HTTPS
+
+  ingress:
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: homelab-tunnel.le-g.dev
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      hosts:
+        - host: &host files.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: opencloud-tls-certificate
+
+  persistence:
+    config:
+      enabled: true
+      type: persistentVolumeClaim
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      globalMounts:
+        - path: /etc/opencloud
+          subPath: config
+        - path: /var/lib/opencloud
+          subPath: data
+    # NAS mount for files - TO ENABLE when mount point is created
+    # nas:
+    #   enabled: true
+    #   type: nfs
+    #   server: 192.168.1.181
+    #   path: /mnt/main/opencloud
+    #   globalMounts:
+    #     - path: /var/lib/opencloud/storage
