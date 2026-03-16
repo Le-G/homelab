@@ -75,11 +75,11 @@ app-template:
           subPath: config
         - path: /var/lib/opencloud
           subPath: data
-    # NAS mount for files - TO ENABLE when mount point is created
-    # nas:
-    #   enabled: true
-    #   type: nfs
-    #   server: 192.168.1.181
-    #   path: /mnt/main/opencloud
-    #   globalMounts:
-    #     - path: /var/lib/opencloud/storage
+    # NAS mount for files
+    nas:
+      enabled: true
+      type: nfs
+      server: 192.168.1.181
+      path: /mnt/main/opencloud
+      globalMounts:
+        - path: /var/lib/opencloud/storage
