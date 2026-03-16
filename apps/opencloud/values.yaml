@@ -22,6 +22,8 @@ app-template:
             OC_INSECURE: "false"
             OC_CONFIG_DIR: /var/lib/opencloud
             OC_BASE_DATA_PATH: /var/lib/opencloud
+            SEARCH_EXTRACTOR_TYPE: basic
+            SEARCH_ENGINE_BLEVE_DATA_PATH: /var/lib/opencloud/search
           command:
             - /bin/sh
             - -c
