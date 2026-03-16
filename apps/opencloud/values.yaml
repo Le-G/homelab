@@ -18,11 +18,11 @@ app-template:
             - /bin/sh
             - -c
             - |
-              if [ ! -f /etc/opencloud/.initialized ]; then
-                /usr/bin/opencloud init
-                touch /etc/opencloud/.initialized
+              if [ ! -f /var/lib/opencloud/.initialized ]; then
+                /usr/bin/opencloud init --config-path /var/lib/opencloud
+                touch /var/lib/opencloud/.initialized
               fi
-              exec /usr/bin/opencloud server
+              exec /usr/bin/opencloud server --config-path /var/lib/opencloud
 
           probes:
             liveness:
@@ -90,17 +90,14 @@ app-template:
           secretName: opencloud-tls-certificate
 
   persistence:
-    config:
+    data:
       enabled: true
       type: persistentVolumeClaim
       storageClass: longhorn
       accessMode: ReadWriteOnce
       size: 10Gi
       globalMounts:
-        - path: /etc/opencloud
-          subPath: config
         - path: /var/lib/opencloud
-          subPath: data
     # NAS mount for files
     nas:
       enabled: true
@@ -108,4 +105,4 @@ app-template:
       server: 192.168.1.181
       path: /mnt/main/opencloud
       globalMounts:
-        - path: /var/lib/opencloud/storage
+        - path: /var/lib/opencloud/storage/users
