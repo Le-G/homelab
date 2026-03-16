@@ -5,6 +5,12 @@ app-template:
       replicas: 1
       strategy: Recreate
 
+      pod:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          fsGroup: 0
+
       containers:
         main:
           image:
@@ -14,13 +20,15 @@ app-template:
             OC_URL: https://files.le-g.dev
             PROXY_HTTP_ADDR: 0.0.0.0:9200
             OC_INSECURE: "false"
+            OC_CONFIG_DIR: /var/lib/opencloud
+            OC_BASE_DATA_PATH: /var/lib/opencloud
           command:
             - /bin/sh
             - -c
             - |
-              if [ ! -f /etc/opencloud/.initialized ]; then
+              if [ ! -f /var/lib/opencloud/.initialized ]; then
                 /usr/bin/opencloud init
-                touch /etc/opencloud/.initialized
+                touch /var/lib/opencloud/.initialized
               fi
               exec /usr/bin/opencloud server
 
@@ -90,17 +98,14 @@ app-template:
           secretName: opencloud-tls-certificate
 
   persistence:
-    config:
+    data:
       enabled: true
       type: persistentVolumeClaim
       storageClass: longhorn
       accessMode: ReadWriteOnce
       size: 10Gi
       globalMounts:
-        - path: /etc/opencloud
-          subPath: config
         - path: /var/lib/opencloud
-          subPath: data
     # NAS mount for files
     nas:
       enabled: true
