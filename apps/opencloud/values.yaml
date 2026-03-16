@@ -5,6 +5,12 @@ app-template:
       replicas: 1
       strategy: Recreate
 
+      pod:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          fsGroup: 0
+
       containers:
         main:
           image:
@@ -14,15 +20,17 @@ app-template:
             OC_URL: https://files.le-g.dev
             PROXY_HTTP_ADDR: 0.0.0.0:9200
             OC_INSECURE: "false"
+            OC_CONFIG_DIR: /var/lib/opencloud
+            OC_BASE_DATA_PATH: /var/lib/opencloud
           command:
             - /bin/sh
             - -c
             - |
               if [ ! -f /var/lib/opencloud/.initialized ]; then
-                /usr/bin/opencloud init --config-path /var/lib/opencloud
+                /usr/bin/opencloud init
                 touch /var/lib/opencloud/.initialized
               fi
-              exec /usr/bin/opencloud server --config-path /var/lib/opencloud
+              exec /usr/bin/opencloud server
 
           probes:
             liveness:
