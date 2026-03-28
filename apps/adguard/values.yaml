@@ -22,9 +22,16 @@ app-template:
       initContainers:
         init-config:
           image:
-            repository: docker.io/busybox
-            tag: latest
-          command: ['sh', '-c', 'cp -n /init-config/AdGuardHome.yaml /config/AdGuardHome.yaml']
+            repository: docker.io/httpd
+            tag: alpine
+          command:
+            - sh
+            - -c
+            - |
+              if [ ! -f /config/AdGuardHome.yaml ]; then
+                HASH=$(htpasswd -nbBC 10 admin "$(cat /secrets/password)" | cut -d: -f2)
+                sed "s|__ADMIN_PASSWORD__|${HASH}|" /init-config/AdGuardHome.yaml > /config/AdGuardHome.yaml
+              fi
 
   service:
     main:
@@ -89,6 +96,15 @@ app-template:
           init-config:
             - path: /init-config/AdGuardHome.yaml
               subPath: AdGuardHome.yaml
+    admin-secret:
+      enabled: true
+      type: secret
+      name: adguard-admin
+      advancedMounts:
+        main:
+          init-config:
+            - path: /secrets/password
+              subPath: password
 
   configMaps:
     bootstrap-config:
@@ -103,7 +119,7 @@ app-template:
             session_ttl: 720h
           users:
             - name: admin
-              password: $2y$10$APv7YU/NzOV1H0.sgO63JOS6mhFJwWCk3jpypT.NOfjLSgbKqIfa6
+              password: __ADMIN_PASSWORD__
           dns:
             bind_hosts:
               - 0.0.0.0
