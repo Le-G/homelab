@@ -43,6 +43,7 @@ app-template:
     dns:
       controller: main
       type: LoadBalancer
+      externalTrafficPolicy: Local
       ports:
         dns-tcp:
           port: 53
