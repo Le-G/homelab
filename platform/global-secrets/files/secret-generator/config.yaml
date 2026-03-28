@@ -19,6 +19,13 @@
       length: 32
       special: true
 
+# adguard
+- name: adguard.admin
+  data:
+    - key: password
+      length: 32
+      special: true
+
 # vaultwarden
 - name: vaultwarden.admin
   data:
