@@ -5,6 +5,10 @@ app-template:
       replicas: 1
       strategy: Recreate
 
+      pod:
+        nodeSelector:
+          kubernetes.io/hostname: han
+
       containers:
         main:
           image:
