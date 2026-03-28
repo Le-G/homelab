@@ -101,7 +101,9 @@ app-template:
               enabled: false
             address: 0.0.0.0:3000
             session_ttl: 720h
-          users: []
+          users:
+            - name: admin
+              password: $2y$10$APv7YU/NzOV1H0.sgO63JOS6mhFJwWCk3jpypT.NOfjLSgbKqIfa6
           dns:
             bind_hosts:
               - 0.0.0.0
