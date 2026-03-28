@@ -101,9 +101,7 @@ app-template:
               enabled: false
             address: 0.0.0.0:3000
             session_ttl: 720h
-          users:
-            - name: admin
-              password: $2a$10$placeholder_change_me_on_first_login
+          users: []
           dns:
             bind_hosts:
               - 0.0.0.0
