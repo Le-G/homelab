@@ -4,8 +4,9 @@ app-template:
       type: deployment
       replicas: 1
       strategy: Recreate
-
       pod:
+        hostNetwork: true
+        dnsPolicy: ClusterFirstWithHostNet
         nodeSelector:
           kubernetes.io/hostname: han
 
@@ -45,16 +46,7 @@ app-template:
           port: 3000
           protocol: HTTP
     dns:
-      controller: main
-      ports:
-        dns-tcp:
-          port: 53
-          protocol: TCP
-          hostPort: 53
-        dns-udp:
-          port: 53
-          protocol: UDP
-          hostPort: 53
+      enabled: false
 
   ingress:
     main:
