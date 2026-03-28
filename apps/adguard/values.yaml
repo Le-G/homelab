@@ -46,15 +46,15 @@ app-template:
           protocol: HTTP
     dns:
       controller: main
-      type: LoadBalancer
-      externalTrafficPolicy: Local
       ports:
         dns-tcp:
           port: 53
           protocol: TCP
+          hostPort: 53
         dns-udp:
           port: 53
           protocol: UDP
+          hostPort: 53
 
   ingress:
     main:
