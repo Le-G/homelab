@@ -1,7 +1,5 @@
 ingress-nginx:
   controller:
-    service:
-      externalTrafficPolicy: Local
     admissionWebhooks:
       timeoutSeconds: 30
     metrics:
