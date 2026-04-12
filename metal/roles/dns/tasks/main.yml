@@ -1,0 +1,11 @@
+- name: Configure DNS servers
+  community.general.nmcli:
+    conn_name: "{{ network_interface }}"
+    type: ethernet
+    dns4: "{{ dns_server.split(',') }}"
+    state: present
+
+- name: Restart NetworkManager to apply DNS changes
+  ansible.builtin.service:
+    name: NetworkManager
+    state: restarted
