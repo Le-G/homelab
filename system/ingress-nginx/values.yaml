@@ -1,7 +1,5 @@
 ingress-nginx:
   controller:
-    extraArgs:
-      allow-cross-namespace-resources: "true"
     service:
       externalTrafficPolicy: Local
     admissionWebhooks:
