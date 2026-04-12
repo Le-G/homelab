@@ -1,6 +1,6 @@
 - name: Get active connection name for interface
   ansible.builtin.shell:
-    cmd: nmcli -t -f NAME,DEVICE connection show --active | grep ':{{ network_interface }}$' | cut -d: -f1
+    cmd: "nmcli -t -f NAME,DEVICE connection show --active | grep ':{{ network_interface }}$' | cut -d: -f1"
   register: active_connection
   changed_when: false
 
