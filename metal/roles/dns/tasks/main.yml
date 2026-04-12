@@ -1,7 +1,12 @@
+- name: Get active connection name for interface
+  ansible.builtin.shell:
+    cmd: nmcli -t -f NAME,DEVICE connection show --active | grep ':{{ network_interface }}$' | cut -d: -f1
+  register: active_connection
+  changed_when: false
+
 - name: Configure DNS servers
   community.general.nmcli:
-    conn_name: "{{ network_interface }}"
-    type: ethernet
+    conn_name: "{{ active_connection.stdout }}"
     dns4: "{{ dns_server.split(',') }}"
     state: present
 
