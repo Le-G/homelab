@@ -2,6 +2,8 @@
 
 ClawdBot deployment for Kubernetes using bjw-s app-template v4.0.1.
 
+> **Note**: This config uses a custom-built image. See the official docs at https://docs.clawd.bot for the latest features.
+
 ## Prerequisites
 
 ### 1. Build and Push Docker Image
@@ -93,16 +95,16 @@ Add the following secrets to your secrets backend (vault/1Password/etc.) that Ex
 # Gateway authentication token (generate a random hex token)
 clawdbot.gateway-token: <random-64-char-hex-string>
 
-# Claude credentials (optional but recommended for full functionality)
-clawdbot.claude-ai-session-key: <your-session-key>
-clawdbot.claude-web-session-key: <your-web-session-key>
-clawdbot.claude-web-cookie: <your-cookie>
+# Anthropic API key (recommended for model access)
+clawdbot.anthropic-api-key: <your-anthropic-api-key>
 ```
 
 To generate a gateway token:
 ```bash
 openssl rand -hex 32
 ```
+
+> **Note**: The old `claude-ai-session-key`, `claude-web-session-key`, and `claude-web-cookie` secrets are deprecated. Modern Clawdbot uses `ANTHROPIC_API_KEY` or OAuth via `clawdbot models auth`.
 
 ### 3. Initial Onboarding (One-time Setup)
 
@@ -137,27 +139,29 @@ kubectl -n apps exec -it deployment/clawdbot-gateway -- \
   node dist/index.js onboard --no-install-daemon
 ```
 
-### 4. Provider Setup (Optional)
+### 4. Channel Setup (Optional)
 
-After onboarding, configure messaging providers:
+After onboarding, configure messaging channels:
 
 #### WhatsApp (QR code)
 ```bash
 kubectl -n apps exec -it deployment/clawdbot-gateway -- \
-  node dist/index.js providers login
+  node dist/index.js channels login
 ```
 
 #### Telegram (bot token)
 ```bash
 kubectl -n apps exec -it deployment/clawdbot-gateway -- \
-  node dist/index.js providers add --provider telegram --token <token>
+  node dist/index.js channels add --channel telegram --token <token>
 ```
 
 #### Discord (bot token)
 ```bash
 kubectl -n apps exec -it deployment/clawdbot-gateway -- \
-  node dist/index.js providers add --provider discord --token <token>
+  node dist/index.js channels add --channel discord --token <token>
 ```
+
+> **Note**: The CLI command changed from `providers` to `channels` in recent versions.
 
 ## Deployment
 
@@ -197,6 +201,18 @@ kubectl -n apps port-forward svc/clawdbot-gateway 18789:18789
 ```bash
 kubectl -n apps exec deployment/clawdbot-gateway -- \
   node dist/index.js health --token "<your-gateway-token>"
+```
+
+### Check model authentication
+```bash
+kubectl -n apps exec deployment/clawdbot-gateway -- \
+  node dist/index.js models status
+```
+
+### Full diagnostics
+```bash
+kubectl -n apps exec deployment/clawdbot-gateway -- \
+  node dist/index.js doctor
 ```
 
 ## Logs
