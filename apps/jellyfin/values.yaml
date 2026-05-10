@@ -135,15 +135,6 @@ app-template:
           image:
             repository: ghcr.io/flaresolverr/flaresolverr
             tag: v3.3.21
-    plex:
-      containers:
-        main:
-          env:
-            PUID: 0
-            PGID: 0
-          image:
-            repository: lscr.io/linuxserver/plex
-            tag: 1.41.0
   service:
     main:
       enabled: false
@@ -201,36 +192,6 @@ app-template:
         http:
           port: 8191
           protocol: HTTP
-    plex:
-      controller: plex
-      ports:
-        http:
-          port: 32400
-          protocol: TCP
-        dlna-udp:
-          port: 1900
-          protocol: UDP
-        discovery:
-          port: 5353
-          protocol: UDP
-        companion:
-          port: 8324
-          protocol: TCP
-        gdm1:
-          port: 32410
-          protocol: UDP
-        gdm2:
-          port: 32412
-          protocol: UDP
-        gdm3:
-          port: 32413
-          protocol: UDP
-        gdm4:
-          port: 32414
-          protocol: UDP
-        dlna:
-          port: 32469
-          protocol: TCP
   ingress:
     public:
       enabled: true
@@ -307,13 +268,6 @@ app-template:
               service:
                 name: flaresolverr
                 port: http
-        - host: &plexHost plex.le-g.dev
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: plex
-                port: http
       tls:
         - secretName: jellyfin-tls-certificate
           hosts:
@@ -322,7 +276,6 @@ app-template:
             - *prowlarrHost
             - *radarrHost
             - *sonarrHost
-            - *plexHost
             - *flaresolverrHost
   persistence:
     data:
@@ -361,14 +314,6 @@ app-template:
           main:
             - path: /app/config
               subPath: jellyseerr/config
-        plex:
-          main:
-            - path: /config
-              subPath: plex/config
-            - path: /media/movies
-              subPath: movies
-            - path: /media/shows
-              subPath: shows
     nas:
       enabled: true
       type: nfs
