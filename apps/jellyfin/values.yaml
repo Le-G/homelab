@@ -31,6 +31,46 @@ app-template:
           image:
             repository: lscr.io/linuxserver/transmission
             tag: 4.0.6
+    qbittorrent:
+      initContainers:
+        init-config:
+          image:
+            repository: docker.io/library/busybox
+            tag: 1.37.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              CONFIG_FILE=/config/qBittorrent/qBittorrent.conf
+              if [ -f "$CONFIG_FILE" ]; then
+                echo "Config already present, leaving in place"
+                exit 0
+              fi
+              echo "Seeding initial qBittorrent.conf for ingress access"
+              mkdir -p /config/qBittorrent
+              cat > "$CONFIG_FILE" <<'EOF'
+              [BitTorrent]
+              Session\DefaultSavePath=/downloads/complete
+              Session\TempPath=/downloads/incomplete
+              Session\TempPathEnabled=true
+
+              [Preferences]
+              WebUI\Address=*
+              WebUI\Port=8080
+              WebUI\HostHeaderValidation=false
+              WebUI\CSRFProtection=false
+              EOF
+              chown -R 0:0 /config/qBittorrent
+      containers:
+        main:
+          env:
+            PUID: 0
+            PGID: 0
+            WEBUI_PORT: 8080
+            TORRENTING_PORT: 6881
+          image:
+            repository: lscr.io/linuxserver/qbittorrent
+            tag: 5.2.0
     prowlarr:
       initContainers:
         ygg-definitions:
@@ -121,6 +161,15 @@ app-template:
           protocol: HTTP
         torrent:
           port: 51413
+          protocol: TCP
+    qbittorrent:
+      controller: qbittorrent
+      ports:
+        http:
+          port: 8080
+          protocol: HTTP
+        torrent:
+          port: 6881
           protocol: TCP
     prowlarr:
       controller: prowlarr
@@ -223,6 +272,13 @@ app-template:
               service:
                 name: transmission
                 port: http
+        - host: &qbittorrentHost qbittorrent.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: qbittorrent
+                port: http
         - host: &prowlarrHost prowlarr.le-g.dev
           paths:
             - path: /
@@ -262,6 +318,7 @@ app-template:
         - secretName: jellyfin-tls-certificate
           hosts:
             - *transmissionHost
+            - *qbittorrentHost
             - *prowlarrHost
             - *radarrHost
             - *sonarrHost
@@ -281,6 +338,13 @@ app-template:
           main:
             - path: /config
               subPath: transmission/config
+        qbittorrent:
+          init-config:
+            - path: /config
+              subPath: qbittorrent/config
+          main:
+            - path: /config
+              subPath: qbittorrent/config
         prowlarr:
           main:
             - path: /config
@@ -315,6 +379,12 @@ app-template:
           main:
             - path: /media
         transmission:
+          main:
+            - path: /downloads/incomplete
+              subPath: downloads/incomplete
+            - path: /downloads/complete
+              subPath: downloads/complete
+        qbittorrent:
           main:
             - path: /downloads/incomplete
               subPath: downloads/incomplete
