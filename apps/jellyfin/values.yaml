@@ -110,7 +110,7 @@ app-template:
             PGID: 0
           image:
             repository: lscr.io/linuxserver/radarr
-            tag: 5.26.2
+            tag: 6.1.1
     sonarr:
       containers:
         main:
@@ -119,7 +119,7 @@ app-template:
             PGID: 0
           image:
             repository: lscr.io/linuxserver/sonarr
-            tag: 4.0.15
+            tag: 4.0.17
     jellyseerr:
       containers:
         main:
