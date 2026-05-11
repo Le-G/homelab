@@ -319,34 +319,28 @@ app-template:
       type: nfs
       server: 192.168.1.181
       path: /mnt/main/medias
+      # Single mount of the whole export at /data for the *arr and torrent stack.
+      # Splitting subPaths into multiple mounts (the previous setup) made each
+      # appear as a distinct vfsmount, so linkat(2) returned EXDEV and Sonarr/
+      # Radarr fell back to copy on import (≈2× storage waste). With one mount,
+      # /data/downloads/... and /data/media/... share the same mount → hardlinks
+      # work, and Sonarr's "Use Hardlinks instead of Copy" finally has effect.
       advancedMounts:
         jellyfin:
           main:
             - path: /media
         transmission:
           main:
-            - path: /downloads/incomplete
-              subPath: downloads/incomplete
-            - path: /downloads/complete
-              subPath: downloads/complete
+            - path: /data
         qbittorrent:
           main:
-            - path: /downloads/incomplete
-              subPath: downloads/incomplete
-            - path: /downloads/complete
-              subPath: downloads/complete
+            - path: /data
         radarr:
           main:
-            - path: /downloads/complete
-              subPath: downloads/complete
-            - path: /movies
-              subPath: media/movies
+            - path: /data
         sonarr:
           main:
-            - path: /downloads/complete
-              subPath: downloads/complete
-            - path: /tvshows
-              subPath: media/tvshows
+            - path: /data
     shared-definitions:
       enabled: true
       type: emptyDir
