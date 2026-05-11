@@ -70,7 +70,12 @@ app-template:
             TORRENTING_PORT: 6881
           image:
             repository: lscr.io/linuxserver/qbittorrent
-            tag: 5.2.0
+            # 4.6.7 is the last 4.x LSIO tag. Pinned because qBittorrent 5.x
+            # changed POST /api/v2/auth/login to reply HTTP 204 (empty body)
+            # instead of "Ok." Radarr/Sonarr still parse the body string and
+            # treat empty as auth failure, so the *arr stack can't talk to
+            # qbit 5.x on the current Radarr 5.26.2 / Sonarr 4.0.15 versions.
+            tag: 4.6.7
     prowlarr:
       initContainers:
         ygg-definitions:
