@@ -8,7 +8,7 @@ immich:
   db:
     username: immich
     database: immich
-    hostname: "{{ .Release.Name }}-postgresql"
+    hostname: "immich-postgres"
     passwordSecret:
       name: immich-postgresql-secret
       key: postgres-password
@@ -19,7 +19,7 @@ immich:
         main:
           env:
             REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
-            DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+            DB_HOSTNAME: "immich-postgres"
             DB_USERNAME: "{{ .Values.db.username }}"
             DB_DATABASE_NAME: "{{ .Values.db.database }}"
             DB_PASSWORD:
@@ -42,7 +42,7 @@ immich:
     # configuration is immich-config.json converted to yaml
     # ref: https://immich.app/docs/install/config-file/
 
-  # Pin to v1.132.3 for intermediate upgrade path (required before upgrading to v2.0.0+)
+  # Running v3.0.1 against the official VectorChord Postgres (immich-postgres).
   server:
     # Configure persistence mounts for the server component
     # Mount the upload subdirectory from PVC to /usr/src/app/upload
@@ -59,11 +59,11 @@ immich:
         containers:
           main:
             image:
-              tag: v1.132.3
+              tag: v3.0.1
             workingDir: /usr/src/app
             env:
               REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
-              DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+              DB_HOSTNAME: "immich-postgres"
               DB_USERNAME: "{{ .Values.db.username }}"
               DB_DATABASE_NAME: "{{ .Values.db.database }}"
               DB_PASSWORD:
@@ -98,40 +98,9 @@ immich:
         containers:
           main:
             image:
-              tag: v1.132.3
-postgresql:
-  global:
-    postgresql:
-      auth:
-        username: immich
-        database: immich
-        existingSecret: immich-postgresql-secret
-        secretKeys:
-          adminPasswordKey: postgres-password
-          userPasswordKey: postgres-password
-    security:
-      allowInsecureImages: true
-  image:
-    registry: ghcr.io
-    repository: le-g/homelab/pg
-    tag: 16
-    pullPolicy: Always
-  postgresqlSharedPreloadLibraries: 'pgaudit,vectors'
-  primary:
-    resources:
-      requests:
-        memory: 512Mi
-        cpu: 250m
-      limits:
-        memory: 1Gi
-        cpu: 500m
-    initdb:
-      scripts:
-        enable-vector.sql: |
-          -- This script runs as postgres superuser during database initialization
-          CREATE EXTENSION IF NOT EXISTS vectors;
-          -- Grant superuser privileges to immich user so it can create any extension
-          ALTER USER immich WITH SUPERUSER;
+              tag: v3.0.1
+# Postgres is now provided by templates/postgres.yaml (ghcr.io/immich-app/postgres,
+# VectorChord). The Bitnami postgresql subchart has been removed from Chart.yaml.
 
 redis:
   enabled: true
