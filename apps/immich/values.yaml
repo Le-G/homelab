@@ -56,6 +56,11 @@ immich:
             readOnly: false
     controllers:
       main:
+        # Pin to obiwan (16Gi); han/luke are only ~8Gi and can't hold a
+        # memory-hungry server (up to its 5Gi limit) alongside Postgres.
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: obiwan
         containers:
           main:
             image:
