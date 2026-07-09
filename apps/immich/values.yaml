@@ -106,16 +106,22 @@ immich:
   machine-learning:
     controllers:
       main:
+        # Use the Intel iGPU via OpenVINO (like Jellyfin). Lands on luke —
+        # obiwan's i915 is claimed by Jellyfin, luke's is free.
+        pod:
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
         containers:
           main:
             image:
-              tag: v3.0.1
+              tag: v3.0.1-openvino
             resources:
               requests:
                 cpu: "1"
                 memory: 1Gi
               limits:
                 memory: 4Gi
+                gpu.intel.com/i915: "1"
 # Postgres is now provided by templates/postgres.yaml (ghcr.io/immich-app/postgres,
 # VectorChord). The Bitnami postgresql subchart has been removed from Chart.yaml.
 
