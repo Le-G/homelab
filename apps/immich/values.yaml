@@ -60,6 +60,12 @@ immich:
           main:
             image:
               tag: v3.0.1
+            resources:
+              requests:
+                cpu: "1"
+                memory: 2Gi
+              limits:
+                memory: 5Gi
             workingDir: /usr/src/app
             env:
               REDIS_HOSTNAME: "{{ .Release.Name }}-redis-master"
@@ -99,6 +105,12 @@ immich:
           main:
             image:
               tag: v3.0.1
+            resources:
+              requests:
+                cpu: "1"
+                memory: 1Gi
+              limits:
+                memory: 4Gi
 # Postgres is now provided by templates/postgres.yaml (ghcr.io/immich-app/postgres,
 # VectorChord). The Bitnami postgresql subchart has been removed from Chart.yaml.
 
