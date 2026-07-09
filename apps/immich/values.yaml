@@ -106,6 +106,9 @@ immich:
   machine-learning:
     controllers:
       main:
+        # Scaled to 0 while unused (frees ~3Gi on luke). Set to 1 + resume
+        # faceDetection/smartSearch queues to run the ML phase.
+        replicas: 0
         # Use the Intel iGPU via OpenVINO (like Jellyfin). Lands on luke —
         # obiwan's i915 is claimed by Jellyfin, luke's is free.
         pod:
