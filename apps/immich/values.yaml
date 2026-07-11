@@ -107,22 +107,23 @@ immich:
     controllers:
       main:
         replicas: 1
-        # Use the Intel iGPU via OpenVINO (like Jellyfin). Lands on luke —
-        # obiwan's i915 is claimed by Jellyfin, luke's is free.
+        # CPU inference. OpenVINO on the iGPU uses shared system RAM (no VRAM)
+        # + GPU-runtime overhead, so it's heavier, not lighter, on RAM — and it
+        # OOM'd at 4Gi. Pin to luke: it has the most free RAM (~4.6Gi), and the
+        # 4Gi cap means ML can't node-OOM luke, so Postgres there stays safe.
         pod:
           nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+            kubernetes.io/hostname: luke
         containers:
           main:
             image:
-              tag: v3.0.1-openvino
+              tag: v3.0.1
             resources:
               requests:
                 cpu: "1"
                 memory: 1Gi
               limits:
                 memory: 4Gi
-                gpu.intel.com/i915: "1"
 # Postgres is now provided by templates/postgres.yaml (ghcr.io/immich-app/postgres,
 # VectorChord). The Bitnami postgresql subchart has been removed from Chart.yaml.
 
