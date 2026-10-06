@@ -1,0 +1,6 @@
+apiVersion: v2
+name: hermes
+version: 0.0.0
+# hermes-agent 1.16.0 is vendored under charts/. Its schema rejects the global
+# values Helm injects into every subchart, so the published chart cannot be
+# pulled in as a dependency. The vendored copy allows that field.

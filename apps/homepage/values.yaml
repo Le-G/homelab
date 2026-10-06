@@ -107,6 +107,10 @@ app-template:
                 href: https://speedtest.le-g.dev
                 description: Internal network speed test
                 icon: openspeedtest.png
+            - Hermes:
+                href: https://hermes.le-g.dev
+                description: Personal AI agent
+                icon: mdi-robot
         bookmarks.yaml: |
           - Homelab:
             - Documentation:
