@@ -99,13 +99,14 @@ app-template:
         config.yaml: |
           # 12 is the oldest schema Hermes auto-migrates; it upgrades from here.
           _config_version: 12
+          # SuperGrok subscription; log in from the dashboard (or
+          # `hermes auth add xai-oauth --no-browser`). Tokens persist in /opt/data.
           model:
-            provider: xai
-            default: grok-4.7
+            provider: xai-oauth
+            default: grok-4.6
+            base_url: https://api.x.ai/v1
           terminal:
             backend: local
-          web:
-            backend: xai
           dashboard:
             public_url: https://hermes.le-g.dev
             # Cilium pod CIDR, where ingress-nginx runs.

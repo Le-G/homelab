@@ -20,5 +20,4 @@ extra_secrets = {
   # ../platform/global-secrets/files/secret-generator/config.yaml
   #
   # key = "value"
-  # xai-api-key = "xai-..."  # consumed by apps/hermes
 }
