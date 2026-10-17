@@ -1,5 +1,16 @@
 ingress-nginx:
   controller:
+    # One replica per node, so losing a node doesn't take every site down.
+    replicaCount: 2
+    minAvailable: 1
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: ingress-nginx
+                app.kubernetes.io/component: controller
     admissionWebhooks:
       timeoutSeconds: 30
     metrics:

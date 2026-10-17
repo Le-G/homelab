@@ -1,5 +1,32 @@
 cert-manager:
   installCRDs: true
+  # The controller leader-elects; the webhook must answer for every
+  # cert-manager resource change, so keep both alive through a node loss.
+  replicaCount: 2
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/instance: cert-manager
+          app.kubernetes.io/component: controller
+  webhook:
+    replicaCount: 2
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: cert-manager
+            app.kubernetes.io/component: webhook
   prometheus:
     enabled: true
     servicemonitor:

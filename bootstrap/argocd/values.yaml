@@ -1,10 +1,17 @@
 argo-cd:
   global:
     domain: argocd.le-g.dev
+    # Spread replicas across nodes.
+    affinity:
+      podAntiAffinity: hard
   configs:
     params:
       controller.diff.server.side: "false"
   server:
+    replicas: 2
+    pdb:
+      enabled: true
+      minAvailable: 1
     extraArgs:
       - --insecure
     config:
@@ -45,6 +52,10 @@ argo-cd:
   controller:
     metrics: *metrics
   repoServer:
+    replicas: 2
+    pdb:
+      enabled: true
+      minAvailable: 1
     metrics: *metrics
   redis:
     metrics: *metrics
