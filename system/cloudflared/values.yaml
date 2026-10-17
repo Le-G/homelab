@@ -1,8 +1,12 @@
 cloudflared:
+  image:
+    tag: "2026.10.1"
   credentials:
     existingSecret: cloudflared-credentials
   config:
     tunnel: homelab
+    # 2026.4.0 defaults this to auto. Pod CIDRs are IPv4-only.
+    edge-ip-version: "4"
     ingress:
       - hostname: '*.le-g.dev'
         service: https://ingress-nginx-controller.ingress-nginx
