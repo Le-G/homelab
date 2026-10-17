@@ -1,16 +1,100 @@
-cloudflared:
-  credentials:
-    existingSecret: cloudflared-credentials
-  config:
-    tunnel: homelab
-    ingress:
-      - hostname: '*.le-g.dev'
-        service: https://ingress-nginx-controller.ingress-nginx
-        originRequest:
-          noTLSVerify: true
-      - service: http_status:404
+app-template:
+  controllers:
+    main:
+      # The previous Deployment selector cannot be patched. A different name
+      # lets the new pods register before Argo prunes the old chart's Deployment.
+      suffix: main
+      replicas: 3
+      strategy: RollingUpdate
+      rollingUpdate:
+        unavailable: 1
+        surge: 1
+      containers:
+        main:
+          image:
+            repository: docker.io/cloudflare/cloudflared
+            tag: "2026.10.1"
+          args:
+            - tunnel
+            - --config
+            - /etc/cloudflared/config.yaml
+            - run
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ready
+                  port: 2000
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                failureThreshold: 1
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ready
+                  port: 2000
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                failureThreshold: 3
 
-  podMonitor:
-    enabled: true
-    metricsEndpoints:
-      - port: http
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 2000
+          protocol: HTTP
+
+  serviceMonitor:
+    main:
+      enabled: true
+      serviceName: cloudflared
+      endpoints:
+        - port: http
+          scheme: http
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 10s
+
+  configMaps:
+    config:
+      data:
+        config.yaml: |
+          credentials-file: /etc/cloudflared/credentials.json
+          # 2026.4.0 defaults this to auto. Pod CIDRs are IPv4-only.
+          edge-ip-version: "4"
+          ingress:
+          - hostname: '*.le-g.dev'
+            originRequest:
+              noTLSVerify: true
+            service: https://ingress-nginx-controller.ingress-nginx
+          - service: http_status:404
+          metrics: 0.0.0.0:2000
+          no-autoupdate: true
+          tunnel: homelab
+
+  persistence:
+    config:
+      type: configMap
+      identifier: config
+      advancedMounts:
+        main:
+          main:
+            - path: /etc/cloudflared/config.yaml
+              subPath: config.yaml
+              readOnly: true
+    credentials:
+      type: secret
+      name: cloudflared-credentials
+      # 0444. The image runs as uid 65532 and only reads this file.
+      defaultMode: 292
+      advancedMounts:
+        main:
+          main:
+            - path: /etc/cloudflared/credentials.json
+              subPath: credentials.json
+              readOnly: true
