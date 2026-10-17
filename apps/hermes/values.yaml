@@ -1,0 +1,113 @@
+app-template:
+  controllers:
+    main:
+      type: deployment
+      replicas: 1
+      strategy: Recreate
+
+      containers:
+        main:
+          image:
+            repository: docker.io/nousresearch/hermes-agent
+            tag: v2026.9.24
+          args:
+            - gateway
+            - run
+          env:
+            HERMES_HOME: /opt/data
+            HERMES_DASHBOARD: "1"
+            HERMES_DASHBOARD_BASIC_AUTH_USERNAME: admin
+          envFrom:
+            - secretRef:
+                name: hermes-secrets
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+
+      initContainers:
+        # Hermes rewrites config.yaml at runtime, so seed it once instead of
+        # mounting it read-only.
+        seed-config:
+          image:
+            repository: docker.io/nousresearch/hermes-agent
+            tag: v2026.9.24
+          command:
+            - sh
+            - -c
+            - |
+              if [ ! -f /opt/data/config.yaml ]; then
+                cp /seed/config.yaml /opt/data/config.yaml
+                chown 10000:10000 /opt/data/config.yaml
+              fi
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 9119
+
+  ingress:
+    main:
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+      hosts:
+        - host: &host hermes.le-g.dev
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: hermes-tls-certificate
+
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      globalMounts:
+        - path: /opt/data
+    config:
+      type: configMap
+      identifier: config
+      advancedMounts:
+        main:
+          seed-config:
+            - path: /seed
+
+  configMaps:
+    config:
+      data:
+        config.yaml: |
+          # 12 is the oldest schema Hermes auto-migrates; it upgrades from here.
+          _config_version: 12
+          model:
+            provider: xai
+            default: grok-4.7
+          terminal:
+            backend: local
+          web:
+            backend: xai
+          dashboard:
+            public_url: https://hermes.le-g.dev
+            # Cilium pod CIDR, where ingress-nginx runs.
+            trusted_proxies:
+              - 10.0.0.0/8
