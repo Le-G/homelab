@@ -42,3 +42,13 @@
     - key: session_secret
       length: 48
       special: false
+
+# realestate hermes dashboard (separate from hermes.dashboard)
+- name: realestate-hermes.dashboard
+  data:
+    - key: password
+      length: 32
+      special: true
+    - key: session_secret
+      length: 48
+      special: false
