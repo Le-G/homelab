@@ -9,6 +9,17 @@ app-template:
       rollingUpdate:
         unavailable: 1
         surge: 1
+      pod:
+        # Spread replicas across nodes. Soft, so a rollout still proceeds while a
+        # node is down.
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: cloudflared
+                app.kubernetes.io/controller: main
       containers:
         main:
           image:
