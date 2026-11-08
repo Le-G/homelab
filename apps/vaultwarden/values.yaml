@@ -5,7 +5,7 @@ app-template:
         main:
           image:
             repository: docker.io/vaultwarden/server
-            tag: 1.35.4-alpine
+            tag: 1.37.5-alpine
           env:
           - name: ADMIN_TOKEN
             valueFrom:
